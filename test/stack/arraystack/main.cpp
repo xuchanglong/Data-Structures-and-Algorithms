@@ -1,4 +1,4 @@
-#include "../../../Data-Structures/stack/arraystack/arraystack.hpp"
+#include "arraystack.hpp"
 #include <iostream>
  
 template <typename T>
