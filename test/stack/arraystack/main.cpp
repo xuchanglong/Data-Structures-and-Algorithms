@@ -12,7 +12,6 @@ int main()
     int pdata[10] = {1, 43, 4, 3, 2, 9, 35, 654, 65, 732};
     showinttype(5 , pdata , 10);
 
-    //std::string str[7] = {"1" , "89" , "42" , "57" , "726" , "71345" , "addw"};
     double dsum[7] = {1.62 , 89.854 , 42.0254 , 57.9513 , 726.8913 , 71345 , 5251.54};
     showinttype(5 , dsum , 7);
     return 0;
