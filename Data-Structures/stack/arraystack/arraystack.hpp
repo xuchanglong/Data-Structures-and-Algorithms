@@ -7,25 +7,25 @@
 #ifndef __ARRAYSTACK_HPP
 #define __ARRAYSTACK_HPP
 
+#include "../stackbase.h"
 #include <string.h>
 
 template <typename T>
-class arraystack
+class ArrayStack : public StackBase<T>
 {
 public:
     //  默认构造函数。
-    arraystack()
+    ArrayStack()
     {
-        size = 0;
         pbuffer = nullptr;
         pos = -1;
     };
     //  拷贝构造函数。
-    arraystack(const arraystack &stack) = delete;
+    ArrayStack(const ArrayStack &stack) = delete;
     //  等号运算符重载。
-    arraystack &operator=(const arraystack &stack) = delete;
+    ArrayStack &operator=(const ArrayStack &stack) = delete;
 
-    virtual ~arraystack()
+    virtual ~ArrayStack()
     {
         if (pbuffer != nullptr)
         {
@@ -48,7 +48,7 @@ public:
         {
             return -1;
         }
-        size = sum;
+        StackBase<T>::size = sum;
         pbuffer = new T[sum]();
         if (pbuffer == nullptr)
         {
@@ -58,6 +58,7 @@ public:
         pos = -1;
         return 0;
     }
+
     /** 
      * @function    将元素压入栈中。
      * @paras       data    待压入栈中的元素。
@@ -91,22 +92,23 @@ public:
             return push(data);
         }
 
-        int size_n = size * 2;
+        int size_n = StackBase<T>::size * 2;
         T *pbuf = new T[size_n];
         if (pbuf == nullptr)
         {
             return -2;
         }
 
-        memcpy(pbuf, pbuffer, sizeof(T) * size);
+        memcpy(pbuf, pbuffer, sizeof(T) * StackBase<T>::size);
 
         delete[] pbuffer;
         pbuffer = pbuf;
         pbuf = nullptr;
 
-        size = size_n;
+        StackBase<T>::size = size_n;
         return push(data);
     }
+
     /**
      * @function    将元素弹出栈。
      * @paras       none
@@ -132,20 +134,21 @@ public:
      *              false   栈是非空。
      */
     bool isempty() const { return pos == -1; }
+
     /**
      * @function    判断栈是否是满的。
      * @paras       none
      * @return      true    栈是满的。
      *              false   栈是非满。
      */
-    bool isfull() const { return (size - 1) == pos; }
+    bool isfull() const { return (StackBase<T>::size - 1) == pos; }
 
     /**
      * @function    返回栈大小。
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t length() const { return size; }
+    size_t length() const { return StackBase<T>::size; }
 
     /**
      * @function    返回栈顶位置。
@@ -156,13 +159,10 @@ public:
 
 private:
     /**
-     * 栈空间大小。
-     */
-    size_t size;
-    /**
      * 栈的存储空间。
      */
     T *pbuffer;
+
     /**
      * 栈顶元素下标。
      */
