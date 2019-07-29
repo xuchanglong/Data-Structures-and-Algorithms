@@ -7,18 +7,23 @@
 #ifndef __ARRAYSTACK_HPP
 #define __ARRAYSTACK_HPP
 
-#include "../stackbase.h"
 #include <string.h>
 
 template <typename T>
-class LinkListStack : public StackBase<T>
+class LinkListStack
 {
+private:
+    struct _linkliststack_node
+    {
+        T *data;
+        _linkliststack_node *pnext;
+    };
 public:
     //  默认构造函数。
     LinkListStack()
     {
-        pbuffer = nullptr;
-        pos = -1;
+        phead = nullptr;
+        size = 0;
     };
     //  拷贝构造函数。
     LinkListStack(const LinkListStack &stack) = delete;
@@ -32,32 +37,26 @@ public:
 
 public:
     /**
-     * @function    创建顺序栈。
-     * @paras       顺序栈的大小。
+     * @function    创建链式栈。
+     * @paras       none
      * @return      0   创建成功。
-     *              -1  参数错误。
-     *              -2  栈已经创建。
-     *              -3  申请内存失败，可能参数过大。
+     *              -1  栈已经创建。
+     *              -2  申请内存失败，可能参数过大。
      */
-    int create(const size_t &sum = 10)
+    int create()
     {
-        if (sum <= 0)
+        if (phead!=nullptr)
         {
             return -1;
         }
-        if (pbuffer)
+        phead = new _linkliststack_node;
+        if (phead==nullptr)
         {
             return -2;
         }
-        
-        StackBase<T>::size = sum;
-        pbuffer = new T[sum]();
-        if (pbuffer == nullptr)
-        {
-            return -3;
-        }
-
-        pos = -1;
+        phead->data = nullptr;
+        phead->pnext = nullptr;
+        size = 0;
         return 0;
     }
 
@@ -66,82 +65,76 @@ public:
      * @paras       none
      * @return      none
      */
-    void destroy()
+    int destroy()
     {
-        if (pbuffer != nullptr)
-        {
-            delete[] pbuffer;
-            pbuffer = nullptr;
-        }
-        size = 0;
-        pos = -1;
-    }
-
-    /** 
-     * @function    将元素压入栈中。
-     * @paras       data    待压入栈中的元素。
-     * @return      0       成功
-     *              -1      未申请栈空间。
-     */
-    int push(T data)
-    {
-        if (isfull())
+        if (phead == nullptr)
         {
             return -1;
         }
 
-        pos++;
-        pbuffer[pos] = data;
+        _linkliststack_node *ptmp;
+        while (phead->pnext)
+        {
+            ptmp = phead->pnext;
+            phead->pnext = ptmp->pnext;
+            delete ptmp;
+            ptmp = nullptr;
+        }
+        delete phead;
+        phead = nullptr;
+        size = 0;
+        return 0;
+    }
+
+    /** 
+     * @function    将元素地址压入栈中。
+     * @paras       data    待压入栈中的元素的地址。
+     * @return      0       操作成功
+     *              -1      地址为空
+     *              -2      申请节点失败。
+     */
+    int push(T *data)
+    {
+        if (data==nullptr)
+        {
+            return -1;
+        }
+        
+        _linkliststack_node *ptmp = new _linkliststack_node;
+        if (ptmp==nullptr)
+        {
+            return -2;
+        }
+        
+        ptmp->data = data;
+        ptmp->pnext = phead->pnext;
+        phead->pnext = ptmp;
+
+        size++;
 
         return 0;
     }
 
     /**
-     *  @function       将元素压入栈。若栈已满，则重新申请2倍原大小的空间，
-     *                               将之前的元素 copy 至新栈中，再在新栈中重新压数。
-     *  @paras          data    待压入栈中的元素。
-     *  @ return        0       成功。
-     *                  -1      内存申请失败。
-     */
-    int push_c(T data)
-    {
-        if (!isfull())
-        {
-            return push(data);
-        }
-
-        int size_n = StackBase<T>::size * 2;
-        T *pbuf = new T[size_n];
-        if (pbuf == nullptr)
-        {
-            return -2;
-        }
-
-        memcpy(pbuf, pbuffer, sizeof(T) * StackBase<T>::size);
-
-        delete[] pbuffer;
-        pbuffer = pbuf;
-        pbuf = nullptr;
-
-        StackBase<T>::size = size_n;
-        return push(data);
-    }
-
-    /**
      * @function    将元素弹出栈。
-     * @paras       none
-     * @return      弹出的数据。
-     * @notice      如何通过返回值显示栈为空的情况，后续补充。
+     * @paras       弹出来的元素。
+     * @return      0   操作成功。
+     *              -1  栈中元素数量为空。
      */
     int pop(T &data)
     {
         if (isempty())
         {
-            return false;
+            return -1;
         }
-        data = pbuffer[pos];
-        pos--;
-        return true;
+        data = *phead->pnext->data;
+
+        _linkliststack_node *ptmp = phead->pnext;
+        phead->pnext = ptmp->pnext;
+        delete ptmp;
+        ptmp = nullptr;
+        size--;
+        return 0;
     }
 
 public:
@@ -151,40 +144,24 @@ public:
      * @return      true    栈是空的。
      *              false   栈是非空。
      */
-    bool isempty() const { return pos == -1; }
-
-    /**
-     * @function    判断栈是否是满的。
-     * @paras       none
-     * @return      true    栈是满的。
-     *              false   栈是非满。
-     */
-    bool isfull() const { return (StackBase<T>::size - 1) == pos; }
+    bool isempty() const { return !size; }
 
     /**
      * @function    返回栈大小。
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t length() const { return StackBase<T>::size; }
-
-    /**
-     * @function    返回栈顶位置。
-     * @paras       none
-     * @return      栈顶位置。
-     */
-    size_t toppos() const { return pos; }
-
+    size_t length() const { return size; }
 private:
     /**
-     * 栈的存储空间。
+     * 栈顶元素指针。
      */
-    T *pbuffer;
+    _linkliststack_node *phead;
 
     /**
-     * 栈顶元素下标。
+     * 栈中元素数量。
      */
-    size_t pos;
+    size_t size;
 };
 
 #endif

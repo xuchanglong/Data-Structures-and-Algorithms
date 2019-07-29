@@ -17,17 +17,23 @@ void showstack(ArrayStack<T> &stack);
  * @return      测试结果。
  */
 template <typename T>
-int teststack(const int &stacksize, const T *const pdata, const int &datasize);
+int teststack(const int &stacksize, T *pdata, const size_t &datasize);
 
 int main()
 {
-    int pdata[10] = {1, 43, 4, 3, 2, 9, 35, 654, 65, 732};
-    teststack(5, pdata, 10);
+    std::cout << "int" << std::endl;
+    int isum[10] = {1, 43, 4, 3, 2, 9, 35, 654, 65, 732};
+    teststack(5, isum, 10);
 
-    std::cout << std::endl;
+    std::cout << std::endl << "double" << std::endl;
 
     double dsum[7] = {1.62, 89.854, 42.0254, 57.9513, 726.8913, 71345, 5251.54};
     teststack(5, dsum, 7);
+
+    std::cout << std::endl << "string" << std::endl;
+
+    std::string strsum[12] = {"a1", "1.62", "c1", "42.0254", "e1", "f1", "aa2", "bb2", "cc2", "dd2", "ee2", "ff2"};
+    teststack(5, strsum, 12);
 
     return 0;
 }
@@ -36,7 +42,7 @@ template <typename T>
 void showstack(ArrayStack<T> &stack)
 {
     T data;
-    while (stack.pop(data))
+    while (stack.pop(data) == 0)
     {
         std::cout << data << "、";
     }
@@ -44,7 +50,7 @@ void showstack(ArrayStack<T> &stack)
 }
 
 template <typename T>
-int teststack(const int &stacksize, const T *const pdata, const int &datasize)
+int teststack(const int &stacksize, T *pdata, const size_t &datasize)
 {
     ArrayStack<T> stack;
     if (stack.create(stacksize) != 0)
@@ -57,7 +63,7 @@ int teststack(const int &stacksize, const T *const pdata, const int &datasize)
     //  若数据溢出，则返回报错。
     for (size_t i = 0; i < datasize; i++)
     {
-        if (stack.push(pdata[i]) != 0)
+        if (stack.push(&pdata[i]) != 0)
         {
             std::cout << pdata[i] << " can't push stack." << std::endl;
         }
@@ -68,7 +74,7 @@ int teststack(const int &stacksize, const T *const pdata, const int &datasize)
     //  若数据溢出，则重新申请内存，继续压数。
     for (size_t i = 0; i < datasize; i++)
     {
-        if (stack.push_c(pdata[i]) != 0)
+        if (stack.push_c(&pdata[i]) != 0)
         {
             std::cout << pdata[i] << " can't push stack." << std::endl;
         }
