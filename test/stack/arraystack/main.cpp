@@ -7,7 +7,7 @@
  * @return      none。
  */
 template <typename T>
-void showstack(arraystack<T> &stack);
+void showstack(ArrayStack<T> &stack);
 
 /**
  * @function    针对不同存储类型的栈，进行测试。
@@ -33,7 +33,7 @@ int main()
 }
 
 template <typename T>
-void showstack(arraystack<T> &stack)
+void showstack(ArrayStack<T> &stack)
 {
     T data;
     while (stack.pop(data))
@@ -46,10 +46,10 @@ void showstack(arraystack<T> &stack)
 template <typename T>
 int teststack(const int &stacksize, const T *const pdata, const int &datasize)
 {
-    arraystack<T> stack;
+    ArrayStack<T> stack;
     if (stack.create(stacksize) != 0)
     {
-        std::cout << "Create arraystack failed." << std::endl;
+        std::cout << "Create ArrayStack failed." << std::endl;
         return -1;
     }
     //  向堆栈进行压入数据。
