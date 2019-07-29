@@ -1,25 +1,30 @@
+/**
+ * @function    顺序栈的类。
+ * @time        2019-07-27
+ * @author      xuchanglong
+ */
+
 #ifndef __ARRAYSTACK_HPP
 #define __ARRAYSTACK_HPP
- 
-#include <string.h> 
- 
+
+#include <string.h>
+
 template <typename T>
 class arraystack
 {
 public:
     //  默认构造函数。
-    arraystack() = delete;
+    arraystack()
+    {
+        size = 0;
+        pbuffer = nullptr;
+        pos = -1;
+    };
     //  拷贝构造函数。
     arraystack(const arraystack &stack) = delete;
     //  等号运算符重载。
     arraystack &operator=(const arraystack &stack) = delete;
- 
-    explicit arraystack(const size_t &sum)
-    {
-        size = sum;
-        pbuffer = new T[sum]();
-        pos = -1;
-    }
+
     virtual ~arraystack()
     {
         if (pbuffer != nullptr)
@@ -28,13 +33,36 @@ public:
             pbuffer = nullptr;
         }
     }
- 
+
 public:
+    /**
+     * @function    创建顺序栈。
+     * @paras       顺序栈的大小。
+     * @return      0   创建成功。
+     *              -1  参数错误。
+     *              -2  申请内存失败，可能参数过大。
+     */
+    int create(const size_t &sum = 10)
+    {
+        if (sum <= 0)
+        {
+            return -1;
+        }
+        size = sum;
+        pbuffer = new T[sum]();
+        if (pbuffer == nullptr)
+        {
+            return -2;
+        }
+
+        pos = -1;
+        return 0;
+    }
     /** 
      * @function    将元素压入栈中。
-     * @paras           data    待压入栈中的元素。
-     * @return          0    成功
-     *                            -1  未申请栈空间。
+     * @paras       data    待压入栈中的元素。
+     * @return      0       成功
+     *              -1      未申请栈空间。
      */
     int push(T data)
     {
@@ -42,19 +70,19 @@ public:
         {
             return -1;
         }
- 
+
         pos++;
         pbuffer[pos] = data;
- 
+
         return 0;
     }
- 
+
     /**
      *  @function       将元素压入栈。若栈已满，则重新申请2倍原大小的空间，
      *                               将之前的元素 copy 至新栈中，再在新栈中重新压数。
-     *  @paras              data        待压入栈中的元素。
-     *  @ return            0       成功。
-     *                                -1      内存申请失败。
+     *  @paras          data    待压入栈中的元素。
+     *  @ return        0       成功。
+     *                  -1      内存申请失败。
      */
     int push_c(T data)
     {
@@ -62,18 +90,22 @@ public:
         {
             return push(data);
         }
- 
-        T *pbuf = new T[size * 2]();
+
+        int size_n = size * 2;
+        T *pbuf = new T[size_n];
+        if (pbuf == nullptr)
+        {
+            return -2;
+        }
+
         memcpy(pbuf, pbuffer, sizeof(T) * size);
- 
+
         delete[] pbuffer;
         pbuffer = pbuf;
         pbuf = nullptr;
- 
-        size = size * 2;
-        push(data);
- 
-        return 0;
+
+        size = size_n;
+        return push(data);
     }
     /**
      * @function    将元素弹出栈。
@@ -91,7 +123,7 @@ public:
         pos--;
         return true;
     }
- 
+
 public:
     /**
      * @function    判断栈是否是空的。
@@ -99,7 +131,7 @@ public:
      * @return      true    栈是空的。
      *              false   栈是非空。
      */
-    bool isempty() const { return size == -1; }
+    bool isempty() const { return pos == -1; }
     /**
      * @function    判断栈是否是满的。
      * @paras       none
@@ -107,14 +139,21 @@ public:
      *              false   栈是非满。
      */
     bool isfull() const { return (size - 1) == pos; }
- 
+
     /**
-     * @function    返回堆栈大小。
-     * @paras          none
-     * @return         堆栈大小。
+     * @function    返回栈大小。
+     * @paras       none
+     * @return      堆栈大小。
      */
-    int length() const { return size; }
- 
+    size_t length() const { return size; }
+
+    /**
+     * @function    返回栈顶位置。
+     * @paras       none
+     * @return      栈顶位置。
+     */
+    size_t toppos() const { return pos; }
+
 private:
     /**
      * 栈空间大小。
@@ -129,5 +168,5 @@ private:
      */
     size_t pos;
 };
- 
+
 #endif
