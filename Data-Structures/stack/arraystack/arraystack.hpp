@@ -4,8 +4,8 @@
  * @author      xuchanglong
  */
 
-#ifndef __ARRAYSTACK_HPP
-#define __ARRAYSTACK_HPP
+#ifndef DATA_STRUCTURES_STACK_ARRAYSTACK_ARRAYSTACK_HPP_
+#define DATA_STRUCTURES_STACK_ARRAYSTACK_ARRAYSTACK_HPP_
 
 #include <string.h>
 
@@ -13,16 +13,15 @@ template <typename T>
 class ArrayStack
 {
 public:
-    //  默认构造函数。
     ArrayStack()
     {
         pbuffer = nullptr;
         pos = -1;
         size = 0;
     };
-    //  拷贝构造函数。
+
     ArrayStack(const ArrayStack &stack) = delete;
-    //  等号运算符重载。
+
     ArrayStack &operator=(const ArrayStack &stack) = delete;
 
     virtual ~ArrayStack()

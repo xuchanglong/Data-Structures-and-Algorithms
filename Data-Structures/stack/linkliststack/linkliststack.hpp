@@ -4,8 +4,8 @@
  * @author      xuchanglong
  */
 
-#ifndef __ARRAYSTACK_HPP
-#define __ARRAYSTACK_HPP
+#ifndef DATA_STRUCTURES_STACK_LINKLISTSTACK_LINKLISTSTACK_HPP_
+#define DATA_STRUCTURES_STACK_LINKLISTSTACK_LINKLISTSTACK_HPP_
 
 #include <string.h>
 
@@ -19,15 +19,15 @@ private:
         _linkliststack_node *pnext;
     };
 public:
-    //  默认构造函数。
+
     LinkListStack()
     {
         phead = nullptr;
         size = 0;
     };
-    //  拷贝构造函数。
+
     LinkListStack(const LinkListStack &stack) = delete;
-    //  等号运算符重载。
+
     LinkListStack &operator=(const LinkListStack &stack) = delete;
 
     virtual ~LinkListStack()
