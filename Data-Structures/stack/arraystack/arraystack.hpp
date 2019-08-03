@@ -20,13 +20,13 @@ public:
         size = 0;
     };
 
-    ArrayStack(const ArrayStack &stack) = delete;
+    ArrayStack(const ArrayStack &kStack) = delete;
 
-    ArrayStack &operator=(const ArrayStack &stack) = delete;
+    ArrayStack &operator=(const ArrayStack &skSack) = delete;
 
     virtual ~ArrayStack()
     {
-        destory();
+        Destory();
     }
 
 public:
@@ -37,14 +37,14 @@ public:
      *              -1  参数错误。
      *              -2  申请内存失败，可能参数过大。
      */
-    int create(const size_t &sum = 10)
+    int Create(const size_t &kSum = 10)
     {
-        if (sum <= 0)
+        if (kSum <= 0)
         {
             return -1;
         }
-        size = sum;
-        pbuffer = new T *[sum]();
+        size = kSum;
+        pbuffer = new T *[kSum]();
         if (pbuffer == nullptr)
         {
             return -2;
@@ -60,7 +60,7 @@ public:
      * @return      0   操作成功。
      *              -1  栈不存在。
      */
-    int destory()
+    int Destory()
     {
         if (pbuffer==nullptr)
         {
@@ -80,9 +80,9 @@ public:
      * @return      0       成功
      *              -1      栈空间已满。
      */
-    int push(T *data)
+    int Push(T *data)
     {
-        if (isfull())
+        if (isFull())
         {
             return -1;
         }
@@ -100,11 +100,11 @@ public:
      *  @ return        0       成功。
      *                  -1      内存申请失败。
      */
-    int push_c(T *data)
+    int Push_c(T *data)
     {
-        if (!isfull())
+        if (!isFull())
         {
-            return push(data);
+            return Push(data);
         }
 
         int size_n = size * 2;
@@ -121,7 +121,7 @@ public:
         pbuf = nullptr;
 
         size = size_n;
-        return push(data);
+        return Push(data);
     }
 
     /**
@@ -131,9 +131,9 @@ public:
      *              -1  栈中元素数量为空。
      * @notice      如何通过返回值显示栈为空的情况，后续补充。
      */
-    int pop(T &data)
+    int Pop(T &data)
     {
-        if (isempty())
+        if (isEmpty())
         {
             return -1;
         }
@@ -149,7 +149,7 @@ public:
      * @return      true    栈是空的。
      *              false   栈是非空。
      */
-    bool isempty() const { return pos == -1; }
+    bool isEmpty() const { return pos == -1; }
 
     /**
      * @function    判断栈是否是满的。
@@ -157,21 +157,21 @@ public:
      * @return      true    栈是满的。
      *              false   栈是非满。
      */
-    bool isfull() const { return (size - 1) == static_cast<size_t>(pos); }
+    bool isFull() const { return (size - 1) == static_cast<size_t>(pos); }
 
     /**
      * @function    返回栈大小。
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t length() const { return size; }
+    size_t Length() const { return size; }
 
     /**
      * @function    返回栈顶位置。
      * @paras       none
      * @return      栈顶位置。
      */
-    size_t toppos() const { return pos; }
+    size_t TopPos() const { return pos; }
 
 private:
     /**

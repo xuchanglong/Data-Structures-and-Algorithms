@@ -1,9 +1,13 @@
 CC = g++
 CFLAGS = -g -Wall
 
-DATA_STRUCTURES_DIR = ../../../Data-Structures
+DATASTRUCTURESDIR = ../../../Data-Structures
 TARGET = main.o
-ARRAYQUEUE_DIR = $(DATA_STRUCTURES_DIR)/queue/arrayqueue
+ARRAYQUEUEDIR = $(DATASTRUCTURESDIR)/queue/arrayqueue
 
-$(TARGET):main.cc $(ARRAYQUEUE_DIR)/arrayqueue.hpp
-	$(CC) -I $(DATA_STRUCTURES_DIR) main.cc  -o 	$@ 	$(CFLAGS)
+$(TARGET):main.cc $(ARRAYQUEUEDIR)/arrayqueue.hpp
+	$(CC) -I $(DATASTRUCTURESDIR) main.cc  -o 	$@ 	$(CFLAGS)
+
+.PHONY:clean
+clean:
+	rm -rf $(ARRAYQUEUEDIR)/arrayqueue.hpp.gch

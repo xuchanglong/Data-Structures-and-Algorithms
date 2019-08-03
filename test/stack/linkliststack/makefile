@@ -5,8 +5,9 @@ DATASTRUCTURESDIR = ../../../Data-Structures
 TARGET = main.o
 LINKLISTSTACKDIR = $(DATASTRUCTURESDIR)/stack/linkliststack
 
-$(TARGET):main.cpp linkliststack.o
-	$(CC)	-I $(LINKLISTSTACKDIR) main.cpp 	-o 	$@ 	$(CFLAGS)
+$(TARGET):main.cc $(LINKLISTSTACKDIR)/linkliststack.hpp
+	$(CC)	-I $(DATASTRUCTURESDIR) main.cc 	-o 	$@ 	$(CFLAGS)
 
-linkliststack.o: $(LINKLISTSTACKDIR)/linkliststack.hpp 
-	$(CC)  -c $(LINKLISTSTACKDIR)/linkliststack.hpp  $(CFLAGS)
+.PHONY:clean
+clean:
+	rm -rf $(LINKLISTSTACKDIR)/linkliststack.hpp.gch

@@ -1,5 +1,5 @@
 /**
- * @function    顺序栈的类。
+ * @function    链式栈的类。
  * @time        2019-07-27
  * @author      xuchanglong
  */
@@ -13,26 +13,26 @@ template <typename T>
 class LinkListStack
 {
 private:
-    struct _linkliststack_node
+    struct LinkListStackNode
     {
         T *data;
-        _linkliststack_node *pnext;
+        LinkListStackNode *next;
     };
-public:
 
+public:
     LinkListStack()
     {
         phead = nullptr;
-        size = 0;
+        elesum = 0;
     };
 
-    LinkListStack(const LinkListStack &stack) = delete;
+    LinkListStack(const LinkListStack &kStack) = delete;
 
-    LinkListStack &operator=(const LinkListStack &stack) = delete;
+    LinkListStack &operator=(const LinkListStack &kStack) = delete;
 
     virtual ~LinkListStack()
     {
-        destroy();
+        Destroy();
     }
 
 public:
@@ -43,20 +43,20 @@ public:
      *              -1  栈已经创建。
      *              -2  申请内存失败，可能参数过大。
      */
-    int create()
+    int Create()
     {
-        if (phead!=nullptr)
+        if (phead != nullptr)
         {
             return -1;
         }
-        phead = new _linkliststack_node;
-        if (phead==nullptr)
+        phead = new LinkListStackNode;
+        if (phead == nullptr)
         {
             return -2;
         }
         phead->data = nullptr;
-        phead->pnext = nullptr;
-        size = 0;
+        phead->next = nullptr;
+        elesum = 0;
         return 0;
     }
 
@@ -65,24 +65,24 @@ public:
      * @paras       none
      * @return      none
      */
-    int destroy()
+    int Destroy()
     {
         if (phead == nullptr)
         {
             return -1;
         }
 
-        _linkliststack_node *ptmp;
-        while (phead->pnext)
+        LinkListStackNode *ptmp;
+        while (phead->next)
         {
-            ptmp = phead->pnext;
-            phead->pnext = ptmp->pnext;
+            ptmp = phead->next;
+            phead->next = ptmp->next;
             delete ptmp;
             ptmp = nullptr;
         }
         delete phead;
         phead = nullptr;
-        size = 0;
+        elesum = 0;
         return 0;
     }
 
@@ -93,24 +93,24 @@ public:
      *              -1      地址为空
      *              -2      申请节点失败。
      */
-    int push(T *data)
+    int Push(T *data)
     {
-        if (data==nullptr)
+        if (data == nullptr)
         {
             return -1;
         }
-        
-        _linkliststack_node *ptmp = new _linkliststack_node;
-        if (ptmp==nullptr)
+
+        LinkListStackNode *ptmp = new LinkListStackNode;
+        if (ptmp == nullptr)
         {
             return -2;
         }
-        
-        ptmp->data = data;
-        ptmp->pnext = phead->pnext;
-        phead->pnext = ptmp;
 
-        size++;
+        ptmp->data = data;
+        ptmp->next = phead->next;
+        phead->next = ptmp;
+
+        elesum++;
 
         return 0;
     }
@@ -121,19 +121,19 @@ public:
      * @return      0   操作成功。
      *              -1  栈中元素数量为空。
      */
-    int pop(T &data)
+    int Pop(T &data)
     {
-        if (isempty())
+        if (isEmpty())
         {
             return -1;
         }
-        data = *phead->pnext->data;
+        data = *phead->next->data;
 
-        _linkliststack_node *ptmp = phead->pnext;
-        phead->pnext = ptmp->pnext;
+        LinkListStackNode *ptmp = phead->next;
+        phead->next = ptmp->next;
         delete ptmp;
         ptmp = nullptr;
-        size--;
+        elesum--;
         return 0;
     }
 
@@ -144,24 +144,25 @@ public:
      * @return      true    栈是空的。
      *              false   栈是非空。
      */
-    bool isempty() const { return !size; }
+    bool isEmpty() const { return !elesum; }
 
     /**
      * @function    返回栈大小。
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t length() const { return size; }
+    size_t Length() const { return elesum; }
+
 private:
     /**
      * 栈顶元素指针。
      */
-    _linkliststack_node *phead;
+    LinkListStackNode *phead;
 
     /**
      * 栈中元素数量。
      */
-    size_t size;
+    size_t elesum;
 };
 
 #endif
