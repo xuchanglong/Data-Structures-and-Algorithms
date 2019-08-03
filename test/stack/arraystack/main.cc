@@ -1,3 +1,8 @@
+/**
+ * @function    stack/arraystack/arraystack.hpp 的单元测试代码。
+ * @author       xuchanglong
+ * @time            2019-07-27   
+ */
 #include "stack/arraystack/arraystack.hpp"
 #include <iostream>
 
