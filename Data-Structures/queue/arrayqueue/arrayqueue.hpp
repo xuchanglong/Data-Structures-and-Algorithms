@@ -6,6 +6,8 @@
 #ifndef DATA_STRUCTURES_QUEUE_ARRAYQUEUE_ARRAYQUEUE_HPP_
 #define DATA_STRUCTURES_QUEUE_ARRAYQUEUE_ARRAYQUEUE_HPP_
 
+#include <cstddef>
+
 template <typename T>
 class ArrayQueue
 {
@@ -18,13 +20,13 @@ public:
         tail = 0;
     }
 
-    ArrayQueue(const ArrayQueue &queue) = delete;
+    ArrayQueue(const ArrayQueue &kQueue) = delete;
 
-    ArrayQueue &operator=(const ArrayQueue &queue) = delete;
-    
+    ArrayQueue &operator=(const ArrayQueue &kQueue) = delete;
+
     ~ArrayQueue()
     {
-        destroy();
+        Destroy();
     }
 
 public:
@@ -38,18 +40,18 @@ public:
      * @author      xuchanglong
      * @time        2019-08-02
      */
-    int create(const size_t &sum = 10)
+    int Create(const size_t &kSum = 10)
     {
-        if (sum <= 0)
+        if (kSum <= 0)
         {
             return -1;
         }
-        pbuffer = new T *[sum];
+        pbuffer = new T *[kSum];
         if (pbuffer == nullptr)
         {
             return -2;
         }
-        queuesize = sum;
+        queuesize = kSum;
         head = 0;
         tail = 0;
         elesum = 0;
@@ -65,7 +67,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-02
      */
-    int destroy()
+    int Destroy()
     {
         if (pbuffer)
         {
@@ -83,7 +85,7 @@ public:
         return 0;
     }
     /**
-     * @function    向队列中压数。
+     * @function    向队列中压数。函数是标准称呼，全称是 Enter Queue 。
      * @paras       pdata   待压入的指针。
      * @return      报错代码。
      *              0   操作成功。
@@ -92,9 +94,9 @@ public:
      * @author      xuchanglong
      * @time        2019-08-02
      */
-    int enqueue(T *pdata)
+    int Enqueue(T *pdata)
     {
-        if (isfull())
+        if (isFull())
         {
             return -1;
         }
@@ -109,7 +111,7 @@ public:
         return 0;
     }
     /**
-     * @function    从队列中取数。
+     * @function    从队列中取数。函数是标准称呼，全称是 Delete Queue 。
      * @paras       data   待取走的数据。
      * @return      报错代码。
      *              0   操作成功。
@@ -117,9 +119,9 @@ public:
      * @author      xuchanglong
      * @time        2019-08-02
      */
-    int dequeue(T &data)
+    int Dequeue(T &data)
     {
-        if (isemply())
+        if (isEmpty())
         {
             return -1;
         }
@@ -128,6 +130,30 @@ public:
         elesum--;
 
         return 0;
+    }
+
+    /**
+     * @function    返回当前队列的大小。
+     * @paras           none
+     * @return          当前队列的大小。
+     * @author          xuchanglong
+     * @time            2019-08-03
+     */
+    size_t Size()
+    {
+        return queuesize;
+    }
+
+    /**
+     * @function    当前元素数量
+     * @paras           none
+     * @return          当前队列的大小。
+     * @author          xuchanglong
+     * @time            2019-08-03
+     */
+    size_t ElementSum()
+    {
+        return elesum;
     }
 
 private:
@@ -139,7 +165,7 @@ private:
      * @author      xuchanglong
      * @time        2019-08-02
      */
-    bool isempty()
+    bool isEmpty()
     {
         return !elesum;
     }
@@ -151,7 +177,7 @@ private:
      * @author      xuchanglong
      * @time        2019-08-02
      */
-    bool isfull()
+    bool isFull()
     {
         return elesum == queuesize;
     }

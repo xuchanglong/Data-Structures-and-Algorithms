@@ -3,3 +3,5 @@
 *.stackdump
 *.vscode
 *.json
+*.d
+*.e
