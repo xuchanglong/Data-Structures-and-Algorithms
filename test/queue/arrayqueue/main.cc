@@ -18,9 +18,9 @@ void ShowQueue(ArrayQueue<T> &queue);
 
 /**
  * @function    针对不同存储类型的队列，进行测试。
- * @paras       queuesize   队列大小。
+ * @paras       kQueueSize   队列大小。
  *              pdata       待测试的数组。
- *              datasize    数组大小。
+ *              kDataSize    数组大小。
  * @return      测试结果。
  */
 template <typename T>

@@ -22,8 +22,8 @@ private:
 public:
     LinkListStack()
     {
-        phead = nullptr;
-        elesum = 0;
+        phead_ = nullptr;
+        elementsum_ = 0;
     };
 
     LinkListStack(const LinkListStack &kStack) = delete;
@@ -45,18 +45,18 @@ public:
      */
     int Create()
     {
-        if (phead != nullptr)
+        if (phead_ != nullptr)
         {
             return -1;
         }
-        phead = new LinkListStackNode;
-        if (phead == nullptr)
+        phead_ = new LinkListStackNode;
+        if (phead_ == nullptr)
         {
             return -2;
         }
-        phead->data = nullptr;
-        phead->next = nullptr;
-        elesum = 0;
+        phead_->data = nullptr;
+        phead_->next = nullptr;
+        elementsum_ = 0;
         return 0;
     }
 
@@ -67,22 +67,22 @@ public:
      */
     int Destroy()
     {
-        if (phead == nullptr)
+        if (phead_ == nullptr)
         {
             return -1;
         }
 
         LinkListStackNode *ptmp;
-        while (phead->next)
+        while (phead_->next)
         {
-            ptmp = phead->next;
-            phead->next = ptmp->next;
+            ptmp = phead_->next;
+            phead_->next = ptmp->next;
             delete ptmp;
             ptmp = nullptr;
         }
-        delete phead;
-        phead = nullptr;
-        elesum = 0;
+        delete phead_;
+        phead_ = nullptr;
+        elementsum_ = 0;
         return 0;
     }
 
@@ -107,10 +107,10 @@ public:
         }
 
         ptmp->data = data;
-        ptmp->next = phead->next;
-        phead->next = ptmp;
+        ptmp->next = phead_->next;
+        phead_->next = ptmp;
 
-        elesum++;
+        elementsum_++;
 
         return 0;
     }
@@ -127,13 +127,13 @@ public:
         {
             return -1;
         }
-        data = *phead->next->data;
+        data = *phead_->next->data;
 
-        LinkListStackNode *ptmp = phead->next;
-        phead->next = ptmp->next;
+        LinkListStackNode *ptmp = phead_->next;
+        phead_->next = ptmp->next;
         delete ptmp;
         ptmp = nullptr;
-        elesum--;
+        elementsum_--;
         return 0;
     }
 
@@ -144,25 +144,25 @@ public:
      * @return      true    栈是空的。
      *              false   栈是非空。
      */
-    bool isEmpty() const { return !elesum; }
+    bool isEmpty() const { return !elementsum_; }
 
     /**
      * @function    返回栈大小。
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t Length() const { return elesum; }
+    size_t Length() const { return elementsum_; }
 
 private:
     /**
      * 栈顶元素指针。
      */
-    LinkListStackNode *phead;
+    LinkListStackNode *phead_;
 
     /**
      * 栈中元素数量。
      */
-    size_t elesum;
+    size_t elementsum_;
 };
 
 #endif

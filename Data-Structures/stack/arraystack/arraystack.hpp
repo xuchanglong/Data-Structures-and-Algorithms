@@ -15,14 +15,14 @@ class ArrayStack
 public:
     ArrayStack()
     {
-        pbuffer = nullptr;
-        pos = -1;
-        size = 0;
+        pbuffer_ = nullptr;
+        pos_ = -1;
+        size_ = 0;
     };
 
     ArrayStack(const ArrayStack &kStack) = delete;
 
-    ArrayStack &operator=(const ArrayStack &skSack) = delete;
+    ArrayStack &operator=(const ArrayStack &kSack) = delete;
 
     virtual ~ArrayStack()
     {
@@ -43,14 +43,14 @@ public:
         {
             return -1;
         }
-        size = kSum;
-        pbuffer = new T *[kSum]();
-        if (pbuffer == nullptr)
+        size_ = kSum;
+        pbuffer_ = new T *[kSum];
+        if (pbuffer_ == nullptr)
         {
             return -2;
         }
 
-        pos = -1;
+        pos_ = -1;
         return 0;
     }
 
@@ -62,14 +62,14 @@ public:
      */
     int Destory()
     {
-        if (pbuffer==nullptr)
+        if (pbuffer_==nullptr)
         {
             return -1;
         }
-        delete pbuffer;
-        pbuffer = nullptr;
-        pos = -1;
-        size = 0;
+        delete pbuffer_;
+        pbuffer_ = nullptr;
+        pos_ = -1;
+        size_ = 0;
 
         return 0;
     }
@@ -87,8 +87,8 @@ public:
             return -1;
         }
 
-        pos++;
-        pbuffer[pos] = data;
+        pos_++;
+        pbuffer_[pos_] = data;
 
         return 0;
     }
@@ -107,20 +107,20 @@ public:
             return Push(data);
         }
 
-        int size_n = size * 2;
+        int size_n = size_ * 2;
         T **pbuf = new T *[size_n];
         if (pbuf == nullptr)
         {
             return -2;
         }
 
-        memcpy(pbuf, pbuffer, sizeof(T *) * size);
+        memcpy(pbuf, pbuffer_, sizeof(T *) * size_);
 
-        delete[] pbuffer;
-        pbuffer = pbuf;
+        delete[] pbuffer_;
+        pbuffer_ = pbuf;
         pbuf = nullptr;
 
-        size = size_n;
+        size_ = size_n;
         return Push(data);
     }
 
@@ -137,8 +137,8 @@ public:
         {
             return -1;
         }
-        data = *pbuffer[pos];
-        pos--;
+        data = *pbuffer_[pos_];
+        pos_--;
         return 0;
     }
 
@@ -149,7 +149,7 @@ public:
      * @return      true    栈是空的。
      *              false   栈是非空。
      */
-    bool isEmpty() const { return pos == -1; }
+    bool isEmpty() const { return pos_ == -1; }
 
     /**
      * @function    判断栈是否是满的。
@@ -157,36 +157,36 @@ public:
      * @return      true    栈是满的。
      *              false   栈是非满。
      */
-    bool isFull() const { return (size - 1) == static_cast<size_t>(pos); }
+    bool isFull() const { return (size_ - 1) == static_cast<size_t>(pos_); }
 
     /**
      * @function    返回栈大小。
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t Length() const { return size; }
+    size_t Length() const { return size_; }
 
     /**
      * @function    返回栈顶位置。
      * @paras       none
      * @return      栈顶位置。
      */
-    size_t TopPos() const { return pos; }
+    size_t TopPos() const { return pos_; }
 
 private:
     /**
      * 栈空间大小。
      */
-    size_t size;
+    size_t size_;
     /**
      * 栈的存储空间。
      */
-    T **pbuffer;
+    T **pbuffer_;
 
     /**
      * 栈顶元素下标。
      */
-    int pos;
+    int pos_;
 };
 
 #endif
