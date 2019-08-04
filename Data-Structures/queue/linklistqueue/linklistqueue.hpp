@@ -21,9 +21,9 @@ private:
 public:
     LinkListQueue()
     {
-        phead = nullptr;
-        ptail = nullptr;
-        elementsum = 0;
+        phead_ = nullptr;
+        ptail_ = nullptr;
+        elementsum_ = 0;
     }
 
     LinkListQueue(const LinkListQueue &kQueue) = delete;
@@ -46,9 +46,9 @@ public:
      */
     int Create()
     {
-        phead = nullptr;
-        ptail = nullptr;
-        elementsum = 0;
+        phead_ = nullptr;
+        ptail_ = nullptr;
+        elementsum_ = 0;
 
         return 0;
     }
@@ -58,28 +58,22 @@ public:
      * @paras       none 。
      * @return      报错代码。
      *              0   操作成功。
-     *              -1  队列中无元素。
      * @author      xuchanglong
      * @time        2019-08-04
      */
     int Destroy()
     {
-        if (!phead || !ptail)
-        {
-            return -1;
-        }
-
         LinkListQueueNode *ptmp;
-        while (phead)
+        while (phead_)
         {
-            ptmp = phead;
-            phead = phead->next;
+            ptmp = phead_;
+            phead_ = phead_->next;
 
             delete ptmp;
             ptmp = nullptr;
         }
-        phead = nullptr;
-        ptail = nullptr;
+        phead_ = nullptr;
+        ptail_ = nullptr;
 
         return 0;
     }
@@ -106,17 +100,17 @@ public:
             return -2;
         }
         ptmp->pdata = pdata;
-        if (phead==nullptr)
+        if (phead_==nullptr)
         {
-            phead = ptmp;
+            phead_ = ptmp;
         }
         else
         {
-            ptail->next = ptmp;
+            ptail_->next = ptmp;
         }
-        ptail = ptmp;
+        ptail_ = ptmp;
 
-        elementsum++;
+        elementsum_++;
         return 0;
     }
 
@@ -135,18 +129,18 @@ public:
         {
             return -1;
         }
-        data = *phead->pdata;
-        LinkListQueueNode *ptmp = phead;
-        phead = phead->next;
+        data = *phead_->pdata;
+        LinkListQueueNode *ptmp = phead_;
+        phead_ = phead_->next;
         delete ptmp;
         ptmp = nullptr;
 
-        if (phead==nullptr)
+        if (phead_==nullptr)
         {
-            ptail = nullptr;
+            ptail_ = nullptr;
         }
 
-        elementsum--;
+        elementsum_--;
         return 0;
     }
 
@@ -158,7 +152,7 @@ private:
      * @author      xuchanglong
      * @time        2019-08-04
      */
-    size_t Size() { return elementsum; }
+    size_t Size() { return elementsum_; }
 
     /**
      * @function    返回队列是否为空。
@@ -168,23 +162,23 @@ private:
      * @author      xuchanglong
      * @time        2019-08-04
      */
-    bool isEmpty() { return !elementsum; }
+    bool isEmpty() { return !elementsum_; }
 
 private:
     /**
      * phead，用于指向队头。
      */
-    LinkListQueueNode *phead;
+    LinkListQueueNode *phead_;
 
     /**
      * ptail，用于指向队尾。
      */
-    LinkListQueueNode *ptail;
+    LinkListQueueNode *ptail_;
 
     /**
      * 计数链式队列中的元素个数。
      */
-    size_t elementsum;
+    size_t elementsum_;
 };
 
 #endif
