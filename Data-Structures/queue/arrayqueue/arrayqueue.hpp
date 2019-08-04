@@ -38,14 +38,14 @@ public:
      * @paras       kSum 队列大小。
      * @return      报错代码。
      *              0   操作成功。
-     *              -1  输入的队列大小 <= 0
-     *              -2  申请内存失败
+     *              -1  输入的队列大小 == 0。
+     *              -2  申请内存失败。
      * @author      xuchanglong
      * @time        2019-08-02
      */
     int Create(const size_t &kSum = 10)
     {
-        if (kSum <= 0)
+        if (kSum == 0)
         {
             return -1;
         }
@@ -65,7 +65,7 @@ public:
      * @paras       none。
      * @return      报错代码。
      *              0   操作成功。
-     *              -1  队列为空
+     *              -1  队列为空。
      * @author      xuchanglong
      * @time        2019-08-02
      */
@@ -90,7 +90,7 @@ public:
      * @paras       pdata   待压入的指针。
      * @return      报错代码。
      *              0   操作成功。
-     *              -1  队列已满
+     *              -1  队列已满。
      *              -2  待压入的指针为空。
      * @author      xuchanglong
      * @time        2019-08-02
@@ -115,7 +115,7 @@ public:
      * @paras       data   待取走的数据。
      * @return      报错代码。
      *              0   操作成功。
-     *              -1  队列为空
+     *              -1  队列为空。
      * @author      xuchanglong
      * @time        2019-08-02
      */

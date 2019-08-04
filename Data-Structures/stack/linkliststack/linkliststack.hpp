@@ -151,7 +151,7 @@ public:
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t Length() const { return elementsum_; }
+    size_t Size() const { return elementsum_; }
 
 private:
     /**

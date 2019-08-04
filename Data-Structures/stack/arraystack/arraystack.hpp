@@ -164,7 +164,7 @@ public:
      * @paras       none
      * @return      堆栈大小。
      */
-    size_t Length() const { return size_; }
+    size_t Size() const { return size_; }
 
     /**
      * @function    返回栈顶位置。
