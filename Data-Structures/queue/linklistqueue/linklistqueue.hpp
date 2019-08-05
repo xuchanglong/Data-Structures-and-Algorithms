@@ -32,7 +32,7 @@ public:
 
     ~LinkListQueue()
     {
-        ;
+        Destroy();
     }
 
 public:
