@@ -100,6 +100,7 @@ public:
             return -2;
         }
         ptmp->pdata = pdata;
+        ptmp->next = nullptr;
         if (phead_==nullptr)
         {
             phead_ = ptmp;
