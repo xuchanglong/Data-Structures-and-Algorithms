@@ -8,6 +8,7 @@
 #define DATA_STRUCTURES_STACK_ARRAYSTACK_ARRAYSTACK_HPP_
 
 #include <string.h>
+#include <new>
 
 template <typename T>
 class ArrayStack
@@ -44,9 +45,13 @@ public:
             return -1;
         }
         size_ = kSum;
-        pbuffer_ = new T *[kSum];
-        if (pbuffer_ == nullptr)
+        try
         {
+            pbuffer_ = new T *[kSum];
+        }
+        catch(const std::exception& e)
+        {
+            //std::cerr << e.what() << '\n';
             return -2;
         }
 
@@ -108,10 +113,15 @@ public:
         }
 
         int size_n = size_ * 2;
-        T **pbuf = new T *[size_n];
-        if (pbuf == nullptr)
+        T **pbuf = nullptr;
+        try
         {
-            return -2;
+            pbuf = new T *[size_n];
+        }
+        catch(const std::exception& e)
+        {
+            //std::cerr << e.what() << '\n';
+            return -1;
         }
 
         memcpy(pbuf, pbuffer_, sizeof(T *) * size_);

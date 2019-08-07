@@ -7,6 +7,7 @@
 #define DATA_STRUCTURES_QUEUE_LINKLISTQUEUE_LINKLISTQUEUE_HPP_
 
 #include <cstddef>
+#include <new>
 
 template <typename T>
 class LinkListQueue
@@ -94,11 +95,17 @@ public:
         {
             return -1;
         }
-        LinkListQueueNode *ptmp = new LinkListQueueNode;
-        if (!ptmp)
+        LinkListQueueNode *ptmp = nullptr;
+        try
         {
+            ptmp = new LinkListQueueNode;
+        }
+        catch(const std::exception& e)
+        {
+            //std::cerr << e.what() << '\n';
             return -2;
         }
+        
         ptmp->pdata = pdata;
         ptmp->next = nullptr;
         if (phead_==nullptr)

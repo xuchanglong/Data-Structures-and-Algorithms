@@ -8,6 +8,7 @@
 #define DATA_STRUCTURES_STACK_LINKLISTSTACK_LINKLISTSTACK_HPP_
 
 #include <string.h>
+#include <new>
 
 template <typename T>
 class LinkListStack
@@ -49,11 +50,16 @@ public:
         {
             return -1;
         }
-        phead_ = new LinkListStackNode;
-        if (phead_ == nullptr)
+        try
         {
+            phead_ = new LinkListStackNode;
+        }
+        catch(const std::exception& e)
+        {
+            //std::cerr << e.what() << '\n';
             return -2;
         }
+        
         phead_->data = nullptr;
         phead_->next = nullptr;
         elementsum_ = 0;

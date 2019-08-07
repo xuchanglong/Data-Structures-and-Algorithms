@@ -11,6 +11,7 @@
 #define DATA_STRUCTURES_QUEUE_ARRAYQUEUE_ARRAYQUEUE_HPP_
 
 #include <cstddef>
+#include <new>
 
 template <typename T>
 class ArrayQueue
@@ -49,11 +50,16 @@ public:
         {
             return -1;
         }
-        pbuffer_ = new T *[kSum];
-        if (pbuffer_ == nullptr)
+        try
         {
+            pbuffer_ = new T *[kSum];
+        }
+        catch(const std::exception& e)
+        {
+            //std::cerr << e.what() << '\n';
             return -2;
         }
+        
         queuesize_ = kSum;
         head_ = 0;
         tail_ = 0;
