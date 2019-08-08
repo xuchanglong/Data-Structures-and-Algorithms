@@ -2,6 +2,7 @@
 #define DATA_STRUCTURES_LINKLIST_DOUBLELINKLIST_DOUBLELINKLIST_HPP_
 
 #include "doublelinklistnode.hpp"
+#include <cstddef>
 
 template <typename T>
 class DoubleLinkList
@@ -46,7 +47,7 @@ public:
     void Destroy()
     {
 
-        DoubleLinkListNode *ptmp = nullptr;
+        DoubleLinkListNode<T> *ptmp = nullptr;
         while (size_)
         {
             ptmp = head_;
@@ -73,14 +74,21 @@ public:
         {
             return -1;
         }
-        DoubleLinkListNode *pnode = new DoubleLinkListNode;
-        memset(pnode, 0, sizeof(DoubleLinkListNode) * 1);
+        DoubleLinkListNode<T> *pnode = new DoubleLinkListNode<T>;
+        memset(pnode, 0, sizeof(DoubleLinkListNode<T>) * 1);
 
         pnode->data = pdata;
-        pnode->prev = head_;
-        head_->next = pnode;
-
-        head_ = pnode;
+        if (size_ == 0)
+        {
+            head_ = pnode;
+            tail_ = pnode;
+        }
+        else
+        {
+            pnode->prev = head_;
+            head_->next = pnode;
+            head_ = pnode;
+        }
         size_++;
         return 0;
     }
@@ -99,13 +107,18 @@ public:
         {
             return -1;
         }
-        DoubleLinkListNode *pnode = tail_;
+        DoubleLinkListNode<T> *pnode = tail_;
         tail_ = tail_->next;
         tail_->prev = nullptr;
 
         delete pnode;
         pnode = nullptr;
         size_--;
+
+        if (tail_ == nullptr)
+        {
+            head_ = nullptr;
+        }
 
         return 0;
     }
@@ -136,7 +149,7 @@ public:
         else if (pnode == tail_)
         {
             tail_ = tail_->next;
-            tail_->next = nullptr;
+            tail_->prev = nullptr;
 
             delete pnode;
             pnode = nullptr;
@@ -164,7 +177,7 @@ public:
      */
     DoubleLinkListNode<T> *SearchNode(const T &data)
     {
-        DoubleLinkListNode *ptmp = head_;
+        DoubleLinkListNode<T> *ptmp = head_;
         while (ptmp)
         {
             if (*(ptmp->data) == data)
@@ -188,6 +201,18 @@ public:
         return size_;
     }
 
+    /**
+     * @function    返回该链表是否为空的标志。
+     * @paras       none 。
+     * @return      true，为空，反之为false。
+     * @author      xuchanglong
+     * @time        2019-08-08
+     */
+    bool isEmpty()
+    {
+        return !size;
+    }
+
 private:
     /**
      * 指向头节点。
@@ -203,6 +228,18 @@ private:
      * 链表中节点的数量。
      */
     size_t size_;
-}
+
+/**
+ * 测试代码，禁止正常使用时使用。
+ */
+public:
+    /**
+     * 返回头部节点。
+     */
+    DoubleLinkListNode<T> *testreurntail()
+    {
+        return tail_;
+    }
+};
 
 #endif
