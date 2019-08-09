@@ -1,3 +1,8 @@
+/**
+ * @function    双链表实现类。
+ * @author      xuchanglong
+ * @time        2019-08-08
+ */
 #ifndef DATA_STRUCTURES_LINKLIST_DOUBLELINKLIST_DOUBLELINKLIST_HPP_
 #define DATA_STRUCTURES_LINKLIST_DOUBLELINKLIST_DOUBLELINKLIST_HPP_
 
@@ -25,7 +30,7 @@ public:
     /**
      * @function    创建双向链表。
      * @paras       none 。
-     * @return      none .
+     * @return      none 。
      * @author      xuchanglong
      * @time        2019-08-08
      */
@@ -58,6 +63,7 @@ public:
             ptmp = nullptr;
             size_--;
         }
+        tail_ = nullptr;
     }
 
     /**
@@ -78,7 +84,7 @@ public:
         memset(pnode, 0, sizeof(DoubleLinkListNode<T>) * 1);
 
         pnode->data = pdata;
-        if (size_ == 0)
+        if (isEmpty())
         {
             head_ = pnode;
             tail_ = pnode;
@@ -112,7 +118,7 @@ public:
         memset(pnode, 0, sizeof(DoubleLinkListNode<T>) * 1);
 
         pnode->data = pdata;
-        if (size_ == 0)
+        if (isEmpty())
         {
             head_ = pnode;
             tail_ = pnode;
@@ -127,70 +133,6 @@ public:
     }
 
     /**
-     * @function    删除链表头部数据。
-     * @paras       none 。
-     * @return      0   操作成功。
-     *              -1  链表为空。
-     * @author      xuchanglong
-     * @time        2019-08-09
-     */
-    int RemoveHead()
-    {
-        if (size_ == 0)
-        {
-            return -1;
-        }
-        DoubleLinkListNode<T> *pnode = head_;
-        head_ = head_->prev;
-        if (head_ != nullptr)
-        {
-            head_->next = nullptr;
-        }
-        else
-        {
-            tail_ = nullptr;
-        }
-
-        delete pnode;
-        pnode = nullptr;
-        size_--;
-
-        return 0;
-    }
-
-    /**
-     * @function    删除链表尾部数据。
-     * @paras       none 。
-     * @return      0   操作成功。
-     *              -1  链表为空。
-     * @author      xuchanglong
-     * @time        2019-08-08
-     */
-    int RemoveTail()
-    {
-        if (size_ == 0)
-        {
-            return -1;
-        }
-        DoubleLinkListNode<T> *pnode = tail_;
-        tail_ = tail_->next;
-        if (tail_ != nullptr)
-        {
-            tail_->prev = nullptr;
-        }
-        else
-        {
-            head_ = nullptr;
-        }
-
-        delete pnode;
-        pnode = nullptr;
-        size_--;
-
-        return 0;
-    }
-
-    /**
      * @function    删除链表中指定的节点。
      * @paras       pnode   待删除的节点。
      * @return      0   操作成功。
@@ -198,7 +140,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-08
      */
-    int RemoveNode(DoubleLinkListNode<T> *pnode)
+    int RemoveNode(DoubleLinkListNode<T> *&pnode)
     {
         if (pnode == nullptr)
         {
@@ -248,12 +190,12 @@ public:
      * @author      xuchanglong
      * @time        2019-08-08
      */
-    DoubleLinkListNode<T> *SearchNode(const T &data)
+    DoubleLinkListNode<T> *SearchNode(T *data)
     {
         DoubleLinkListNode<T> *ptmp = head_;
         while (ptmp)
         {
-            if (*(ptmp->data) == data)
+            if (ptmp->data == data)
             {
                 return ptmp;
             }
