@@ -15,6 +15,7 @@ class SingleLinkList
 public:
     SingleLinkList()
     {
+        maxsize_ = 0xffffffff;
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
@@ -39,6 +40,15 @@ public:
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
+        maxsize_ = 0xffffffff;
+    }
+
+    void Create(size_t maxsize)
+    {
+        head_ = nullptr;
+        tail_ = nullptr;
+        size_ = 0;
+        maxsize_ = maxsize;
     }
 
     /**
@@ -69,6 +79,7 @@ public:
      * @paras       pdata   待插入的数据。
      * @return      0   操作成功。
      *              -1  pdata == nullptr 。
+     *              -2  链表已满。
      * @author      xuchanglong
      * @time        2019-08-09
      */
@@ -77,6 +88,10 @@ public:
         if (pdata == nullptr)
         {
             return -1;
+        }
+        if (size_ >= maxsize_)
+        {
+            return -2;
         }
         SingleLinkListNode<T> *pnode = new SingleLinkListNode<T>;
         memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
@@ -101,6 +116,7 @@ public:
      * @paras       pdata   待插入的数据。
      * @return      0   操作成功。
      *              -1  pdata == nullptr 。
+     *              -2  链表已满。
      * @author      xuchanglong
      * @time        2019-08-09
      */
@@ -109,6 +125,10 @@ public:
         if (pdata == nullptr)
         {
             return -1;
+        }
+        if (size_ >= maxsize_)
+        {
+            return -2;
         }
         SingleLinkListNode<T> *pnode = new SingleLinkListNode<T>;
         memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
@@ -258,19 +278,38 @@ public:
         return size_;
     }
 
+    /**
+     * @function    返回链表中节点数量上限。
+     * @paras       node 。
+     * @return      链表中节点数量上限。
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    size_t MaxSize()
+    {
+        return maxsize_;
+    }
+
 private:
     /**
      * 头部节点。
      */
     SingleLinkListNode<T> *head_;
+
     /**
      * 尾部节点。
      */
     SingleLinkListNode<T> *tail_;
+
     /**
      * 节点数量。
      */
     size_t size_;
+    
+    /**
+     * 链表节点上限。
+     */
+    size_t maxsize_;
 };
 
 #endif

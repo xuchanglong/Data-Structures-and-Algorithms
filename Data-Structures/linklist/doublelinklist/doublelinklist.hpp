@@ -18,6 +18,7 @@ public:
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
+        maxsize_ = 0xffffffff;
     }
     DoubleLinkList(const DoubleLinkList &obj) = delete;
     DoubleLinkList &operator=(const DoubleLinkList &obj) = delete;
@@ -39,6 +40,22 @@ public:
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
+        maxsize_ = 0xffffffff;
+    }
+
+    /**
+     * @function    创建双向链表。
+     * @paras       none 。
+     * @return      none 。
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    void Create(size_t maxsize)
+    {
+        head_ = nullptr;
+        tail_ = nullptr;
+        size_ = 0;
+        maxsize_ = maxsize;
     }
 
     /**
@@ -51,7 +68,6 @@ public:
      */
     void Destroy()
     {
-
         DoubleLinkListNode<T> *ptmp = nullptr;
         while (size_)
         {
@@ -71,6 +87,7 @@ public:
      * @paras       pdata   待插入的数据。
      * @return      0   操作成功。
      *              -1  pdata == nullptr
+     *              -2  链表已满。
      * @author      xuchanglong
      * @time        2019-08-08
      */
@@ -80,6 +97,11 @@ public:
         {
             return -1;
         }
+        if (size_ >= maxsize_)
+        {
+            return -2;
+        }
+        
         DoubleLinkListNode<T> *pnode = new DoubleLinkListNode<T>;
         memset(pnode, 0, sizeof(DoubleLinkListNode<T>) * 1);
 
@@ -104,6 +126,7 @@ public:
      * @paras       pdata   待插入的数据。
      * @return      0   操作成功。
      *              -1  pdata == nullptr
+     *              -2  链表已满。
      * @author      xuchanglong
      * @time        2019-08-09
      */
@@ -112,6 +135,10 @@ public:
         if (pdata == nullptr)
         {
             return -1;
+        }
+        if (size_ >= maxsize_)
+        {
+            return -2;
         }
 
         DoubleLinkListNode<T> *pnode = new DoubleLinkListNode<T>;
@@ -241,6 +268,18 @@ public:
     }
 
     /**
+     * @function    返回链表中节点数量上限。
+     * @paras       none 。
+     * @return      链表中的节点数量。
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    size_t MaxSize()
+    {
+        return maxsize_;
+    }
+
+    /**
      * @function    返回该链表是否为空的标志。
      * @paras       none 。
      * @return      true，为空，反之为false。
@@ -267,6 +306,11 @@ private:
      * 链表中节点的数量。
      */
     size_t size_;
+
+    /**
+     * 链表节点上限。
+     */
+    size_t maxsize_;
 };
 
 #endif
