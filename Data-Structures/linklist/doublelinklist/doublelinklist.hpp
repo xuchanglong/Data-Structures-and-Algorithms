@@ -94,6 +94,71 @@ public:
     }
 
     /**
+     * @function    向链表的尾部插入新的数据。
+     * @paras       pdata   待插入的数据。
+     * @return      0   操作成功。
+     *              -1  pdata == nullptr
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    int InsertTail(T *pdata)
+    {
+        if (pdata == nullptr)
+        {
+            return -1;
+        }
+
+        DoubleLinkListNode<T> *pnode = new DoubleLinkListNode<T>;
+        memset(pnode, 0, sizeof(DoubleLinkListNode<T>) * 1);
+
+        pnode->data = pdata;
+        if (size_ == 0)
+        {
+            head_ = pnode;
+            tail_ = pnode;
+        }
+        else
+        {
+            pnode->next = tail_;
+            tail_->prev = pnode;
+            tail_ = pnode;
+        }
+        size_++;
+    }
+
+    /**
+     * @function    删除链表头部数据。
+     * @paras       none 。
+     * @return      0   操作成功。
+     *              -1  链表为空。
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    int RemoveHead()
+    {
+        if (size_ == 0)
+        {
+            return -1;
+        }
+        DoubleLinkListNode<T> *pnode = head_;
+        head_ = head_->prev;
+        if (head_ != nullptr)
+        {
+            head_->next = nullptr;
+        }
+        else
+        {
+            tail_ = nullptr;
+        }
+
+        delete pnode;
+        pnode = nullptr;
+        size_--;
+
+        return 0;
+    }
+
+    /**
      * @function    删除链表尾部数据。
      * @paras       none 。
      * @return      0   操作成功。
@@ -113,15 +178,14 @@ public:
         {
             tail_->prev = nullptr;
         }
+        else
+        {
+            head_ = nullptr;
+        }
 
         delete pnode;
         pnode = nullptr;
         size_--;
-
-        if (tail_ == nullptr)
-        {
-            head_ = nullptr;
-        }
 
         return 0;
     }
@@ -199,6 +263,30 @@ public:
     }
 
     /**
+     * @function    返回头部节点。
+     * @paras       none 。
+     * @return      头部节点。
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    DoubleLinkListNode<T> *Head()
+    {
+        return head_;
+    }
+
+    /**
+     * @function    返回尾部节点。
+     * @paras       none 。
+     * @return      尾部节点。
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    DoubleLinkListNode<T> *Tail()
+    {
+        return tail_;
+    }
+
+    /**
      * @function    返回链表中节点数量。
      * @paras       none 。
      * @return      链表中的节点数量。
@@ -237,18 +325,6 @@ private:
      * 链表中节点的数量。
      */
     size_t size_;
-
-    /**
- * 测试代码，禁止正常使用时使用。
- */
-public:
-    /**
-     * 返回头部节点。
-     */
-    DoubleLinkListNode<T> *testreturntail()
-    {
-        return tail_;
-    }
 };
 
 #endif

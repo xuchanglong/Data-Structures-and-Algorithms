@@ -55,7 +55,7 @@ void ShowDoubleLinkList(DoubleLinkList<T> &kDLinkList)
     DoubleLinkListNode<T> *pnode = nullptr;
     while (!kDLinkList.isEmpty())
     {
-        pnode = kDLinkList.testreturntail();
+        pnode = kDLinkList.Tail();
         std::cout << *pnode->data << "、";
         kDLinkList.RemoveTail();
     }
