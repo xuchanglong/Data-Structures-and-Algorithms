@@ -5,6 +5,7 @@
  */
 #include "linklist/doublelinklist/doublelinklist.hpp"
 #include <iostream>
+#include <string.h>
 
 /**
  * @function    依次从链表中取出元素，显示到控制台上。
@@ -51,11 +52,11 @@ int main()
 template <typename T>
 void ShowDoubleLinkList(DoubleLinkList<T> &kDLinkList)
 {
-    T data;
-    DoubleLinkListNode *pnode;
-    while (pnode = kDLinkList.testretruntail())
+    DoubleLinkListNode<T> *pnode = nullptr;
+    while (!kDLinkList.isEmpty())
     {
-        std::cout << pnode->data << "、";
+        pnode = kDLinkList.testreturntail();
+        std::cout << *pnode->data << "、";
         kDLinkList.RemoveTail();
     }
     std::cout << std::endl;
@@ -65,18 +66,14 @@ template <typename T>
 int TestDoubleLinkList(T *pdata, const size_t &kDataSize)
 {
     DoubleLinkList<T> dlinklist;
-    if (dlinklist.Create() != 0)
-    {
-        std::cout << "Create doublelinklist failed." << std::endl;
-        return -1;
-    }
+    dlinklist.Create();
     //  向链表中中进行压入数据。
     std::cout << "-------------------  Enter  -------------------" << std::endl;
     for (size_t i = 0; i < kDataSize; i++)
     {
-        if (dlinklist.InsertHead(&pdata[i]) != 0)
+        if (dlinklist.InsertHead(pdata + i) != 0)
         {
-            std::cout << pdata[i] << " can't enter queue." << std::endl;
+            std::cout << pdata[i] << " can't enter linklist." << std::endl;
         }
     }
     ShowDoubleLinkList(dlinklist);

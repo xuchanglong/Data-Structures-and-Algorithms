@@ -109,7 +109,10 @@ public:
         }
         DoubleLinkListNode<T> *pnode = tail_;
         tail_ = tail_->next;
-        tail_->prev = nullptr;
+        if (tail_ != nullptr)
+        {
+            tail_->prev = nullptr;
+        }
 
         delete pnode;
         pnode = nullptr;
@@ -141,7 +144,10 @@ public:
         if (pnode == head_)
         {
             head_ = head_->prev;
-            head_->next = nullptr;
+            if (head_ != nullptr)
+            {
+                head_->next = nullptr;
+            }
 
             delete pnode;
             pnode = nullptr;
@@ -149,7 +155,10 @@ public:
         else if (pnode == tail_)
         {
             tail_ = tail_->next;
-            tail_->prev = nullptr;
+            if (tail_ != nullptr)
+            {
+                tail_->prev = nullptr;
+            }
 
             delete pnode;
             pnode = nullptr;
@@ -210,7 +219,7 @@ public:
      */
     bool isEmpty()
     {
-        return !size;
+        return !size_;
     }
 
 private:
@@ -229,14 +238,14 @@ private:
      */
     size_t size_;
 
-/**
+    /**
  * 测试代码，禁止正常使用时使用。
  */
 public:
     /**
      * 返回头部节点。
      */
-    DoubleLinkListNode<T> *testreurntail()
+    DoubleLinkListNode<T> *testreturntail()
     {
         return tail_;
     }
