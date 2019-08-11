@@ -3,7 +3,7 @@
  * @author       xuchanglong
  * @time            2019-08-09
  */
-#include "linklist/singlelinklist/singlelinklist.hpp"
+#include "linklist/singlelinklist/singlelinklist.cc"
 #include <iostream>
 #include <string.h>
 
@@ -52,12 +52,11 @@ int main()
 template <typename T>
 void ShowSingleLinkList(SingleLinkList<T> &kSLinkList)
 {
-    SingleLinkListNode<T> *pnode = nullptr;
-    while (!kSLinkList.isEmpty())
+    SingleLinkListNode<T> *pnode = kSLinkList.Tail();
+    while (pnode)
     {
-        pnode = kSLinkList.Tail();
         std::cout << *pnode->data << "、";
-        kSLinkList.RemoveNode(pnode);
+        pnode = pnode->next;
     }
     std::cout << std::endl;
 }

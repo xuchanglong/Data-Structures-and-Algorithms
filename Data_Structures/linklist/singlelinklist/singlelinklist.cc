@@ -1,13 +1,14 @@
 /**
  * @function    单链表实现类。
  * @author      xuchanglong
- * @time        2018-08-09；
+ * @time        2018-08-09
  */
 #ifndef DATA_STRUCTURES_LINKLIST_SINGLELINKLIST_SINGLELINKLIST_HPP_
 #define DATA_STRUCTURES_LINKLIST_SINGLELINKLIST_SINGLELINKLIST_HPP_
 
-#include "singlelinklistnode.hpp"
+#include "singlelinklistnode.h"
 #include <string.h>
+#include <iostream>
 
 template <typename T>
 class SingleLinkList
@@ -15,7 +16,7 @@ class SingleLinkList
 public:
     SingleLinkList()
     {
-        maxsize_ = 0xffffffff;
+        maxsize_ = -1;
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
@@ -40,7 +41,7 @@ public:
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
-        maxsize_ = 0xffffffff;
+        maxsize_ = -1;
     }
 
     void Create(size_t maxsize)
@@ -158,7 +159,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-09
      */
-    int RemoveNode(SingleLinkListNode<T> *&pnode)
+    int RemoveNode(SingleLinkListNode<T> *pnode)
     {
         if (pnode == nullptr)
         {
@@ -205,9 +206,8 @@ public:
     /**
      * @function    搜索指定的数据。
      * @paras       pdata   待插入的数据。
-     * @return      0   操作成功。
-     *              -1  pdata == nullptr 。
-     *              -2  未找到指定的元素。
+     * @return      非空    操作成功。
+     *                          空      失败。
      * @author      xuchanglong
      * @time        2019-08-09
      */
@@ -215,16 +215,21 @@ public:
     {
         if (pdata == nullptr)
         {
-            return -1;
+            return nullptr;
         }
+        if (isEmpty())
+        {
+            return nullptr;
+        }
+        
         SingleLinkListNode<T> *pnode = nullptr;
         pnode = tail_;
-        while (pnode->data != pdata)
+        while (*pnode->data != *pdata)
         {
-            pnode = tail_->next;
+            pnode = pnode->next;
             if (pnode == nullptr)
             {
-                return -2;
+                return nullptr;
             }
         }
         return pnode;
@@ -288,6 +293,11 @@ public:
     size_t MaxSize()
     {
         return maxsize_;
+    }
+
+    bool isFull()
+    {
+        return size_ == maxsize_;
     }
 
 private:

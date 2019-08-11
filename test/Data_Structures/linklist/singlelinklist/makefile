@@ -1,12 +1,12 @@
 CC = g++
 CFLAGS = -g -Wall
 
-DATASTRUCTURESDIR = ../../../Data-Structures
+DATASTRUCTURESDIR = ../../../../Data_Structures
 TARGET = main.o
 SINGLELINKLISTDIR = $(DATASTRUCTURESDIR)/linklist/singlelinklist
 
-$(TARGET):main.cc $(SINGLELINKLISTDIR)/singlelinklist.hpp
-	$(CC) -I $(DATASTRUCTURESDIR) main.cc  -o 	$@ 	$(CFLAGS)
+$(TARGET):main.cc $(SINGLELINKLISTDIR)/singlelinklist.cc
+	$(CC)  main.cc  -o 	$@ 	$(CFLAGS) -I $(DATASTRUCTURESDIR)
 
 .PHONY:clean
 clean:
