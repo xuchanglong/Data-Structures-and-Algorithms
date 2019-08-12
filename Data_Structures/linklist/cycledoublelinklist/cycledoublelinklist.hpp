@@ -39,7 +39,7 @@ public:
     void Create()
     {
         pSentinel = new CycleDoubleLinkListNode<T>;
-        ClearSentinel(pSentinel);
+        ClearSentinel();
         size_ = 0;
         maxsize_ = -1;
     }
@@ -54,7 +54,7 @@ public:
     void Create(size_t maxsize)
     {
         pSentinel = new CycleDoubleLinkListNode<T>;
-        ClearSentinel(pSentinel);
+        ClearSentinel();
         size_ = 0;
         maxsize_ = maxsize;
     }
