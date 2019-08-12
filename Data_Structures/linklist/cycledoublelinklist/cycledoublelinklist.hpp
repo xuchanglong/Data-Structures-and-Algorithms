@@ -1,84 +1,84 @@
 /**
- * @function    双向链表实现类。
+ * @function    待哨兵节点的双向循环链表的实现类。
  * @author      xuchanglong
- * @time        2019-08-08
+ * @time        2019-08-12
  */
-#ifndef DATA_STRUCTURES_LINKLIST_DOUBLELINKLIST_DOUBLELINKLIST_HPP_
-#define DATA_STRUCTURES_LINKLIST_DOUBLELINKLIST_DOUBLELINKLIST_HPP_
+#ifndef DATA_STRUCTURES_LINKLIST_CYCLEDOUBLELINKLIST_CYCLEDOUBLELINKLIST_HPP_
+#define DATA_STRUCTURES_LINKLIST_CYCLEDOUBLELINKLIST_CYCLEDOUBLELINKLIST_HPP_
 
-#include "doublelinklistnode.hpp"
+#include "cycledoublelinklistnode.hpp"
 #include <cstddef>
 
 template <typename T>
-class DoubleLinkList
+class CycleDoubleLinkList
 {
 public:
-    DoubleLinkList()
+    CycleDoubleLinkList()
     {
-        head_ = nullptr;
-        tail_ = nullptr;
+        pSentinel = nullptr;
         size_ = 0;
-        maxsize_ = 0xffffffff;
+        maxsize_ = -1;
     }
-    DoubleLinkList(const DoubleLinkList &obj) = delete;
-    DoubleLinkList &operator=(const DoubleLinkList &obj) = delete;
-    ~DoubleLinkList()
+    CycleDoubleLinkList(const CycleDoubleLinkList &obj) = delete;
+    CycleDoubleLinkList &operator=(const CycleDoubleLinkList &obj) = delete;
+    ~CycleDoubleLinkList()
     {
         Destroy();
+        delete pSentinel;
+        pSentinel = nullptr;
     }
 
 public:
     /**
-     * @function    创建双向链表。
+     * @function    创建双向循环链表。
      * @paras       none 。
      * @return      none 。
      * @author      xuchanglong
-     * @time        2019-08-08
+     * @time        2019-08-12
      */
     void Create()
     {
-        head_ = nullptr;
-        tail_ = nullptr;
+        pSentinel = new CycleDoubleLinkListNode<T>;
+        ClearSentinel(pSentinel);
         size_ = 0;
-        maxsize_ = 0xffffffff;
+        maxsize_ = -1;
     }
 
     /**
-     * @function    创建双向链表。
+     * @function    创建双向循环链表。
      * @paras       none 。
      * @return      none 。
      * @author      xuchanglong
-     * @time        2019-08-09
+     * @time        2019-08-12
      */
     void Create(size_t maxsize)
     {
-        head_ = nullptr;
-        tail_ = nullptr;
+        pSentinel = new CycleDoubleLinkListNode<T>;
+        ClearSentinel(pSentinel);
         size_ = 0;
         maxsize_ = maxsize;
     }
 
     /**
-     * @function    销毁双向链表。
+     * @function    销毁双向循环链表。
      * @paras       none 。
      * @return      none 。
      * @author      xuchanglong
-     * @time        2019-08-08
+     * @time        2019-08-12
      */
     void Destroy()
     {
-        DoubleLinkListNode<T> *ptmp = nullptr;
+        CycleDoubleLinkListNode<T> *ptmp = nullptr;
         while (size_)
         {
-            ptmp = head_;
-            head_ = head_->prev;
-            head_->next = nullptr;
+            ptmp = pSentinel->next;
+            pSentinel->next = pSentinel->next->next;
 
             delete ptmp;
             ptmp = nullptr;
             size_--;
         }
-        tail_ = nullptr;
+        pSentinel->prev = nullptr;
     }
 
     /**
@@ -88,7 +88,7 @@ public:
      *              -1  pdata == nullptr
      *              -2  链表已满。
      * @author      xuchanglong
-     * @time        2019-08-08
+     * @time        2019-08-12
      */
     int InsertHead(T *pdata)
     {
@@ -100,22 +100,15 @@ public:
         {
             return -2;
         }
-        
-        DoubleLinkListNode<T> *pnode = new DoubleLinkListNode<T>;
-        memset(pnode, 0, sizeof(DoubleLinkListNode<T>) * 1);
 
+        CycleDoubleLinkListNode<T> *pnode = new CycleDoubleLinkListNode<T>;
         pnode->data = pdata;
-        if (isEmpty())
-        {
-            head_ = pnode;
-            tail_ = pnode;
-        }
-        else
-        {
-            pnode->prev = head_;
-            head_->next = pnode;
-            head_ = pnode;
-        }
+
+        pnode->next = pSentinel->next;
+        pnode->prev = pSentinel;
+        pSentinel->next = pnode;
+        pnode->next->prev = pnode;
+
         size_++;
         return 0;
     }
@@ -127,7 +120,7 @@ public:
      *              -1  pdata == nullptr
      *              -2  链表已满。
      * @author      xuchanglong
-     * @time        2019-08-09
+     * @time        2019-08-12
      */
     int InsertTail(T *pdata)
     {
@@ -140,21 +133,14 @@ public:
             return -2;
         }
 
-        DoubleLinkListNode<T> *pnode = new DoubleLinkListNode<T>;
-        memset(pnode, 0, sizeof(DoubleLinkListNode<T>) * 1);
-
+        CycleDoubleLinkListNode<T> *pnode = new CycleDoubleLinkListNode<T>;
         pnode->data = pdata;
-        if (isEmpty())
-        {
-            head_ = pnode;
-            tail_ = pnode;
-        }
-        else
-        {
-            pnode->next = tail_;
-            tail_->prev = pnode;
-            tail_ = pnode;
-        }
+
+        pnode->next = pSentinel;
+        pnode->prev = pSentinel->prev;
+        pSentinel->prev = pnode;
+        pnode->prev->next = pnode;
+
         size_++;
     }
 
@@ -164,45 +150,20 @@ public:
      * @return      0   操作成功。
      *              -1  pnode == nullptr
      * @author      xuchanglong
-     * @time        2019-08-08
+     * @time        2019-08-12
      */
-    int RemoveNode(DoubleLinkListNode<T> *&pnode)
+    int RemoveNode(CycleDoubleLinkListNode<T> *&pnode)
     {
         if (pnode == nullptr)
         {
             return -1;
         }
 
-        if (pnode == head_)
-        {
-            head_ = head_->prev;
-            if (head_ != nullptr)
-            {
-                head_->next = nullptr;
-            }
+        pnode->next->prev = pnode->prev;
+        pnode->prev->next = pnode->next;
 
-            delete pnode;
-            pnode = nullptr;
-        }
-        else if (pnode == tail_)
-        {
-            tail_ = tail_->next;
-            if (tail_ != nullptr)
-            {
-                tail_->prev = nullptr;
-            }
-
-            delete pnode;
-            pnode = nullptr;
-        }
-        else
-        {
-            pnode->prev->next = pnode->next;
-            pnode->next->prev = pnode->prev;
-
-            delete pnode;
-            pnode = nullptr;
-        }
+        delete pnode;
+        pnode = nullptr;
 
         size_--;
         return 0;
@@ -214,12 +175,12 @@ public:
      * @return      非空    操作成功。
      *              空      未找到指定数据的节点。
      * @author      xuchanglong
-     * @time        2019-08-08
+     * @time        2019-08-12
      */
-    DoubleLinkListNode<T> *SearchNode(T *data)
+    CycleDoubleLinkListNode<T> *SearchNode(T *data)
     {
-        DoubleLinkListNode<T> *ptmp = head_;
-        while (ptmp)
+        CycleDoubleLinkListNode<T> *ptmp = pSentinel->next;
+        while (ptmp->data != nullptr)
         {
             if (*ptmp->data == *data)
             {
@@ -235,11 +196,11 @@ public:
      * @paras       none 。
      * @return      头部节点。
      * @author      xuchanglong
-     * @time        2019-08-09
+     * @time        2019-08-12
      */
-    DoubleLinkListNode<T> *Head()
+    CycleDoubleLinkListNode<T> *Head()
     {
-        return head_;
+        return pSentinel->next;
     }
 
     /**
@@ -247,11 +208,11 @@ public:
      * @paras       none 。
      * @return      尾部节点。
      * @author      xuchanglong
-     * @time        2019-08-09
+     * @time        2019-08-12
      */
-    DoubleLinkListNode<T> *Tail()
+    CycleDoubleLinkListNode<T> *Tail()
     {
-        return tail_;
+        return pSentinel->prev;
     }
 
     /**
@@ -259,7 +220,7 @@ public:
      * @paras       none 。
      * @return      链表中的节点数量。
      * @author      xuchanglong
-     * @time        2019-08-08
+     * @time        2019-08-12
      */
     size_t Size()
     {
@@ -271,7 +232,7 @@ public:
      * @paras       none 。
      * @return      链表中的节点数量。
      * @author      xuchanglong
-     * @time        2019-08-09
+     * @time        2019-08-12
      */
     size_t MaxSize()
     {
@@ -283,23 +244,29 @@ public:
      * @paras       none 。
      * @return      true，为空，反之为false。
      * @author      xuchanglong
-     * @time        2019-08-08
+     * @time        2019-08-12
      */
     bool isEmpty()
     {
         return !size_;
     }
-
+private:
+    void ClearSentinel()
+    {
+        if (pSentinel)
+        {
+            pSentinel->data = nullptr;
+            pSentinel->next = pSentinel;
+            pSentinel->prev = pSentinel;
+        }
+    }
 private:
     /**
-     * 指向头节点。
+     * 哨兵节点。
+     * pSentinel->next 代表双向链表的头节点。
+     * pSentinel->prev 代表双向链表的尾节点。
      */
-    DoubleLinkListNode<T> *head_;
-
-    /**
-     * 指向尾节点。
-     */
-    DoubleLinkListNode<T> *tail_;
+    CycleDoubleLinkListNode<T> *pSentinel;
 
     /**
      * 链表中节点的数量。
