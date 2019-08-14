@@ -15,7 +15,7 @@ int main()
     {
         std::cout << "next" << std::endl;
 
-        LRU_SingleLinkList(slinklist, testnum + i);
+        LRU(slinklist, testnum + i);
         ShowSingleLinkList(slinklist);
     }
     slinklist.Destroy();

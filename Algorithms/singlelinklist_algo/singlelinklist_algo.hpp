@@ -20,7 +20,7 @@
  * @time         2019-08-10           
  */
 template <typename T>
-int LRU_SingleLinkList(SingleLinkList<T> &slinklist, T *pdata)
+int LRU(SingleLinkList<T> &slinklist, T *pdata)
 {
     if (pdata == nullptr)
     {
