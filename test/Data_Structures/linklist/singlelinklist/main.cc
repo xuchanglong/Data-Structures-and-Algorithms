@@ -3,7 +3,7 @@
  * @author       xuchanglong
  * @time            2019-08-09
  */
-#include "linklist/singlelinklist/singlelinklist.cc"
+#include "linklist/singlelinklist/singlelinklist.hpp"
 #include <iostream>
 #include <string.h>
 

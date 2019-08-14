@@ -18,7 +18,7 @@ public:
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
-        maxsize_ = 0xffffffff;
+        maxsize_ = -1;
     }
     DoubleLinkList(const DoubleLinkList &obj) = delete;
     DoubleLinkList &operator=(const DoubleLinkList &obj) = delete;
@@ -40,7 +40,7 @@ public:
         head_ = nullptr;
         tail_ = nullptr;
         size_ = 0;
-        maxsize_ = 0xffffffff;
+        maxsize_ = -1;
     }
 
     /**

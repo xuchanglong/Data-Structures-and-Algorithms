@@ -5,7 +5,7 @@ DATASTRUCTURESDIR = ../../../../Data_Structures
 TARGET = main.o
 SINGLELINKLISTDIR = $(DATASTRUCTURESDIR)/linklist/singlelinklist
 
-$(TARGET):main.cc $(SINGLELINKLISTDIR)/singlelinklist.cc
+$(TARGET):main.cc $(SINGLELINKLISTDIR)/singlelinklist.hpp
 	$(CC)  main.cc  -o 	$@ 	$(CFLAGS) -I $(DATASTRUCTURESDIR)
 
 .PHONY:clean

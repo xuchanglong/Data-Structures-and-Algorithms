@@ -1,4 +1,4 @@
-#include "LRU/lru.c"
+#include "singlelinklist_algo/singlelinklist_algo.hpp"
 #include <iostream>
 
 template <typename T>
