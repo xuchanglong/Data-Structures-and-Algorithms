@@ -70,7 +70,7 @@ int TestSingleLinkList(T *pdata, const size_t &kDataSize)
     std::cout << "-------------------  Enter  -------------------" << std::endl;
     for (size_t i = 0; i < kDataSize; i++)
     {
-        if (slinklist.InsertHead(pdata + i) != 0)
+        if (slinklist.InsertHead(nullptr, pdata + i) != 0)
         {
             std::cout << pdata[i] << " can't enter linklist." << std::endl;
         }

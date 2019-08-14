@@ -77,16 +77,20 @@ public:
 
     /**
      * @function    在头部位置插入节点。
-     * @paras       pdata   待插入的数据。
+     * @paras       pnode   待插入的节点。
+     *                        pdata   待插入的数据。
      * @return      0   操作成功。
-     *              -1  pdata == nullptr 。
+     *              -1  pdata == nullptr  && pnode == nullptr
      *              -2  链表已满。
      * @author      xuchanglong
      * @time        2019-08-09
+     * -----------------------------------------------
+     * @modify  增加形参 pnode 。
+     * @time        2019-08-14
      */
-    int InsertHead(T *pdata)
+    int InsertHead(SingleLinkListNode<T> *pnode, T *pdata)
     {
-        if (pdata == nullptr)
+        if ((pdata == nullptr) && (pnode == nullptr))
         {
             return -1;
         }
@@ -94,9 +98,12 @@ public:
         {
             return -2;
         }
-        SingleLinkListNode<T> *pnode = new SingleLinkListNode<T>;
-        memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
-        pnode->data = pdata;
+        if (pnode==nullptr)
+        {
+            pnode = new SingleLinkListNode<T>;
+            memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
+            pnode->data = pdata;
+        }
 
         if (isEmpty())
         {
@@ -120,10 +127,13 @@ public:
      *              -2  链表已满。
      * @author      xuchanglong
      * @time        2019-08-09
+     * -----------------------------------------------
+     * @modify  增加形参 pnode 。
+     * @time        2019-08-14
      */
-    int InsertTail(T *pdata)
+    int InsertTail(SingleLinkListNode<T> *pnode, T *pdata)
     {
-        if (pdata == nullptr)
+        if ((pdata == nullptr) && (pnode == nullptr))
         {
             return -1;
         }
@@ -131,9 +141,12 @@ public:
         {
             return -2;
         }
-        SingleLinkListNode<T> *pnode = new SingleLinkListNode<T>;
-        memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
-        pnode->data = pdata;
+        if (pnode==nullptr)
+        {
+            pnode = new SingleLinkListNode<T>;
+            memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
+            pnode->data = pdata;
+        }
 
         if (isEmpty())
         {
@@ -221,7 +234,7 @@ public:
         {
             return nullptr;
         }
-        
+
         SingleLinkListNode<T> *pnode = nullptr;
         pnode = tail_;
         while (*pnode->data != *pdata)
@@ -315,7 +328,7 @@ private:
      * 节点数量。
      */
     size_t size_;
-    
+
     /**
      * 链表节点上限。
      */

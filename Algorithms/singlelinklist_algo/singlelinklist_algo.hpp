@@ -35,18 +35,18 @@ int LRU(SingleLinkList<T> &slinklist, T *pdata)
     if (pnode)
     {
         slinklist.RemoveNode(pnode);
-        slinklist.InsertHead(pdata);
+        slinklist.InsertHead(nullptr, pdata);
     }
     else
     {
         if (slinklist.isFull())
         {
             slinklist.RemoveNode(slinklist.Tail());
-            slinklist.InsertHead(pdata);
+            slinklist.InsertHead(nullptr, pdata);
         }
         else
         {
-            slinklist.InsertHead(pdata);
+            slinklist.InsertHead(nullptr, pdata);
         }
     }
 
