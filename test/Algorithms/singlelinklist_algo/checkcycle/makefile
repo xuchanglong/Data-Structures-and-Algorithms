@@ -2,8 +2,8 @@ CC := g++
 CFLAGS := -g -Wall
 TARGET := main
 
-DATASTRUCTURESDIR := ../../../Data_Structures
-ALGORITHMSDIR := ../../../Algorithms
+DATASTRUCTURESDIR := ../../../../Data_Structures
+ALGORITHMSDIR := ../../../../Algorithms
 
 SINGLELINKLISTDIR := $(DATASTRUCTURESDIR)/linklist/singlelinklist
 SINGLELINKLIST_ALGODIR := $(ALGORITHMSDIR)/singlelinklist_algo
@@ -16,4 +16,4 @@ $(TARGET):main.cc \
 
 .PHONY:clean
 clean:
-	-rm  -rf main
+	-rm  -rf main.exe main

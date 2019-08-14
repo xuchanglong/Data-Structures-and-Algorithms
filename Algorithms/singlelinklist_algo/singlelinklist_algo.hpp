@@ -62,7 +62,7 @@ int LRU(SingleLinkList<T> &slinklist, T *pdata)
  * @time        2019-08-14    
  */
 template <typename T>
-bool CheckCycle(const SingleLinkList<T> &slinklist)
+bool CheckCycle(SingleLinkList<T> &slinklist)
 {
     SingleLinkListNode<T> *ptail = slinklist.Tail();
     if ((ptail == nullptr) || (ptail->next == nullptr))
