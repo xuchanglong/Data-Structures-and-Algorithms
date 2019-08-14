@@ -2,6 +2,10 @@
  * @function    单向链表的算法操作集合。
  * @author      xuchanglong
  * @time        2019-08-14
+ * -------------------------------------------------
+ * @modify      增加检测链表是否含有环的功能。
+ * @author      xuchanglong
+ * @time        2019-08-14
  */
 #ifndef ALGORITHMS_SINGLELINKLIST_ALGO_SINGLELINKLIST_ALGO_H_
 #define ALGORITHMS_SINGLELINKLIST_ALGO_SINGLELINKLIST_ALGO_H_
@@ -49,4 +53,33 @@ int LRU(SingleLinkList<T> &slinklist, T *pdata)
     return 0;
 }
 
+/**
+ * @function    检测链表中是否含有环。
+ * @paras       slinklist   待检测的链表。
+ * @return      true    有环。
+ *              false   无环。   
+ * @author      xuchanglong
+ * @time        2019-08-14    
+ */
+template <typename T>
+bool CheckCycle(const SingleLinkList<T> &slinklist)
+{
+    SingleLinkListNode<T> *ptail = slinklist.Tail();
+    if ((ptail == nullptr) || (ptail->next == nullptr))
+    {
+        return false;
+    }
+    SingleLinkListNode<T> *pslow = ptail;
+    SingleLinkListNode<T> *pfast = ptail;
+    while ((pfast != nullptr) && (pfast->next != nullptr))
+    {
+        pslow = pslow->next;
+        pfast = pfast->next->next;
+        if (pslow == pfast)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 #endif
