@@ -70,15 +70,8 @@ public:
         {
             return;
         }
-        if (tail_->next != nullptr)
-        {
-            pnodebase = tail_;
-        }
-        else
-        {
-            pnodebase = head_;
-        }
 
+        tail_->next != nullptr ? pnodebase = tail_ : pnodebase = head_;
         while (size_)
         {
             pnode = pnodebase;
