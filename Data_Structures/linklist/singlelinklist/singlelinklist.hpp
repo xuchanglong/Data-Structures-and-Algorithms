@@ -61,18 +61,19 @@ public:
      * --------------------------------
      * @modify      增加判断链表起始位置的功能。
      * @time        2019-08-15
+     * @question    暂时不能解决带环的单链的释放问题。
      */
     void Destroy()
     {
-        SingleLinkListNode<T> *pnodebase = nullptr;
-        SingleLinkListNode<T> *pnode = nullptr;
         if (size_ == 0)
         {
             return;
         }
+        SingleLinkListNode<T> *pnodebase = nullptr;
+        SingleLinkListNode<T> *pnode = nullptr;
 
         tail_->next != nullptr ? pnodebase = tail_ : pnodebase = head_;
-        while (size_)
+        while ((size_ != 0) and (pnodebase != nullptr))
         {
             pnode = pnodebase;
             pnodebase = pnodebase->next;
@@ -82,6 +83,7 @@ public:
 
             size_--;
         }
+        tail_ = nullptr;
         head_ = nullptr;
     }
 
@@ -234,7 +236,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-09
      */
-    SingleLinkListNode<T> *SearchNode(T *pdata)
+    SingleLinkListNode<T> *SearchNode(T *pdata) const
     {
         if (pdata == nullptr)
         {
@@ -265,7 +267,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-09
      */
-    SingleLinkListNode<T> *Head()
+    SingleLinkListNode<T> *Head() const
     {
         return head_;
     }
@@ -276,7 +278,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-09
      */
-    SingleLinkListNode<T> *Tail()
+    SingleLinkListNode<T> *Tail() const
     {
         return tail_;
     }
@@ -289,7 +291,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-09
      */
-    bool isEmpty()
+    bool isEmpty() const
     {
         return !size_;
     }
@@ -301,7 +303,7 @@ public:
      * @author      xuchanglong
      * @time        2019-08-09
      */
-    size_t Size()
+    size_t Size() const
     {
         return size_;
     }
@@ -313,12 +315,20 @@ public:
      * @author      xuchanglong
      * @time        2019-08-09
      */
-    size_t MaxSize()
+    size_t MaxSize() const
     {
         return maxsize_;
     }
 
-    bool isFull()
+    /**
+     * @function    判断链表是否是满的。
+     * @paras       node 。
+     * @return      true    已满。
+     *              false   未满。
+     * @author      xuchanglong
+     * @time        2019-08-09
+     */
+    bool isFull() const
     {
         return size_ == maxsize_;
     }

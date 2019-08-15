@@ -7,7 +7,7 @@
  * @author      xuchanglong
  * @time        2019-08-14
  * -------------------------------------------------
- * @modify      增加翻转链表的功能。
+ * @modify      增加翻转链表、合并两个有序链表的功能。
  * @author      xuchanglong
  * @time        2019-08-15
  */
@@ -66,7 +66,7 @@ int LRU(SingleLinkList<T> &slinklist, T *pdata)
  * @time        2019-08-14    
  */
 template <typename T>
-bool CheckCycle(SingleLinkList<T> &slinklist)
+bool CheckCycle(const SingleLinkList<T> &slinklist)
 {
     SingleLinkListNode<T> *ptail = slinklist.Tail();
     if ((ptail == nullptr) || (ptail->next == nullptr))
@@ -96,18 +96,18 @@ bool CheckCycle(SingleLinkList<T> &slinklist)
  * @time        2019-08-15   
  */
 template <typename T>
-int Reverse(SingleLinkList<T> &slinklist)
+int Reverse(const SingleLinkList<T> &slinklist)
 {
     SingleLinkListNode<T> *ptail = slinklist.Tail();
     if ((ptail == nullptr) || (ptail->next == nullptr))
     {
         return -1;
     }
-    SingleLinkListNode<T> *prev,*curr,*next;
+    SingleLinkListNode<T> *prev, *curr, *next;
     prev = nullptr;
     curr = ptail;
     next = ptail->next;
-    while(curr->next != nullptr)
+    while (curr->next != nullptr)
     {
         curr->next = prev;
         prev = curr;
@@ -116,6 +116,79 @@ int Reverse(SingleLinkList<T> &slinklist)
     }
     curr->next = prev;
     return 0;
+}
+
+/**
+ * @function    合并两个有序的链表。
+ * @paras       slinklist_1   待合并的链表1
+ *              slinklist_2   待合并的链表2
+ * @return      非nullptr   合并成功
+ *              nullptr     两个链表为空。  
+ * @author      xuchanglong
+ * @time        2019-08-15   
+ */
+template <typename T>
+SingleLinkListNode<T> *MergeTwoSotedlinklistO(const SingleLinkList<T> &slinklist_1, const SingleLinkList<T> &slinklist_2)
+{
+    /**
+     * 形参约束。
+    */
+    if (slinklist_1.isEmpty() || slinklist_2.isEmpty())
+    {
+        return nullptr;
+    }
+    SingleLinkListNode<T> *pnode_1, *pnode_2, *phead, *ptmp;
+    pnode_1 = slinklist_1.Tail();
+    pnode_2 = slinklist_2.Tail();
+    phead = nullptr;
+    ptmp = nullptr;
+
+    /**
+    * 确定合并之后的链表的首节点。
+    */
+    if (*pnode_1->data <= *pnode_2->data)
+    {
+        phead = pnode_1;
+        pnode_1 = pnode_1->next;
+    }
+    else
+    {
+        phead = pnode_2;
+        pnode_2 = pnode_2->next;
+    }
+    ptmp = phead;
+
+    /**
+     * 合并链表。
+    */
+    while (pnode_1 != nullptr && pnode_2 != nullptr)
+    {
+        if (*pnode_1->data <= *pnode_2->data)
+        {
+            ptmp->next = pnode_1;
+            pnode_1 = pnode_1->next;
+        }
+        else
+        {
+            ptmp->next = pnode_2;
+            pnode_2 = pnode_2->next;            
+        }
+        ptmp = ptmp->next;
+    }
+
+    /**
+    * 合并链表中剩余的节点。 
+    */
+    if (pnode_1 != nullptr)
+    {
+        ptmp->next = pnode_1;
+    }
+    else if (pnode_2 != nullptr)
+    {
+        ptmp->next = pnode_2;
+    }
+    
+    return phead;
 }
 
 #endif

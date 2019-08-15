@@ -10,9 +10,10 @@ SINGLELINKLIST_ALGODIR := $(ALGORITHMSDIR)/singlelinklist_algo
 
 $(TARGET):main.cc \
 	   	  $(SINGLELINKLIST_ALGODIR)/singlelinklist_algo.hpp \
-	   	  $(SINGLELINKLISTDIR)/*
+	   	  $(SINGLELINKLISTDIR)/singlelinklist.hpp \
+	      $(SINGLELINKLISTDIR)/singlelinklistnode.h
 	$(CC) $< -o $@ -I  $(DATASTRUCTURESDIR) -I $(ALGORITHMSDIR)
 
 .PHONY:clean
 clean:
-	-rm  -rf main.exe main.exe.stackdump main
+	-rm  -rf main.exe main
