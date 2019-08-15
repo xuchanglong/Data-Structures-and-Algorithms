@@ -128,7 +128,8 @@ int Reverse(const SingleLinkList<T> &slinklist)
  * @time        2019-08-15   
  */
 template <typename T>
-SingleLinkListNode<T> *MergeTwoSotedlinklistO(const SingleLinkList<T> &slinklist_1, const SingleLinkList<T> &slinklist_2)
+SingleLinkListNode<T> *MergeTwoSotedlinklist(const SingleLinkList<T> &slinklist_1,
+                                             const SingleLinkList<T> &slinklist_2)
 {
     /**
      * 形参约束。
@@ -171,7 +172,7 @@ SingleLinkListNode<T> *MergeTwoSotedlinklistO(const SingleLinkList<T> &slinklist
         else
         {
             ptmp->next = pnode_2;
-            pnode_2 = pnode_2->next;            
+            pnode_2 = pnode_2->next;
         }
         ptmp = ptmp->next;
     }
@@ -187,7 +188,7 @@ SingleLinkListNode<T> *MergeTwoSotedlinklistO(const SingleLinkList<T> &slinklist
     {
         ptmp->next = pnode_2;
     }
-    
+
     return phead;
 }
 
