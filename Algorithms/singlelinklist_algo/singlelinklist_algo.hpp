@@ -6,6 +6,10 @@
  * @modify      增加检测链表是否含有环的功能。
  * @author      xuchanglong
  * @time        2019-08-14
+ * -------------------------------------------------
+ * @modify      增加翻转链表的功能。
+ * @author      xuchanglong
+ * @time        2019-08-15
  */
 #ifndef ALGORITHMS_SINGLELINKLIST_ALGO_SINGLELINKLIST_ALGO_H_
 #define ALGORITHMS_SINGLELINKLIST_ALGO_SINGLELINKLIST_ALGO_H_
@@ -82,4 +86,36 @@ bool CheckCycle(SingleLinkList<T> &slinklist)
     }
     return false;
 }
+
+/**
+ * @function    翻转单向链表。
+ * @paras       slinklist   待检测的链表。
+ * @return      0   链表中至少有2个节点并且翻转成功。
+ *              -1  链表为空或者只有一个节点。   
+ * @author      xuchanglong
+ * @time        2019-08-15   
+ */
+template <typename T>
+int Reverse(SingleLinkList<T> &slinklist)
+{
+    SingleLinkListNode<T> *ptail = slinklist.Tail();
+    if ((ptail == nullptr) || (ptail->next == nullptr))
+    {
+        return -1;
+    }
+    SingleLinkListNode<T> *prev,*curr,*next;
+    prev = nullptr;
+    curr = ptail;
+    next = ptail->next;
+    while(curr->next != nullptr)
+    {
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        next = curr->next;
+    }
+    curr->next = prev;
+    return 0;
+}
+
 #endif

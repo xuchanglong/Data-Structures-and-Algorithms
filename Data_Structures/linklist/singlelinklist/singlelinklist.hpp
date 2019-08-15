@@ -58,14 +58,31 @@ public:
      * @return      none 。
      * @author      xuchanglong
      * @time        2019-08-09
+     * --------------------------------
+     * @modify      增加判断链表起始位置的功能。
+     * @time        2019-08-15
      */
     void Destroy()
     {
+        SingleLinkListNode<T> *pnodebase = nullptr;
         SingleLinkListNode<T> *pnode = nullptr;
+        if (size_ == 0)
+        {
+            return;
+        }
+        if (tail_->next != nullptr)
+        {
+            pnodebase = tail_;
+        }
+        else
+        {
+            pnodebase = head_;
+        }
+
         while (size_)
         {
-            pnode = tail_;
-            tail_ = tail_->next;
+            pnode = pnodebase;
+            pnodebase = pnodebase->next;
 
             delete pnode;
             pnode = nullptr;
@@ -98,7 +115,7 @@ public:
         {
             return -2;
         }
-        if (pnode==nullptr)
+        if (pnode == nullptr)
         {
             pnode = new SingleLinkListNode<T>;
             memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
@@ -141,7 +158,7 @@ public:
         {
             return -2;
         }
-        if (pnode==nullptr)
+        if (pnode == nullptr)
         {
             pnode = new SingleLinkListNode<T>;
             memset(pnode, 0, sizeof(SingleLinkListNode<T>) * 1);
