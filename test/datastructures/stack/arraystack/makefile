@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g -Wall
 
-DATASTRUCTURESDIR = ../../../../Data_Structures
+DATASTRUCTURESDIR = ../../../../datastructures
 TARGET = main.o
 ARRAYSTACKDIR = $(DATASTRUCTURESDIR)/stack/arraystack
 
