@@ -15,7 +15,7 @@
 /**
  * @function    插入排序算法。
  * @paras       pdata   待排序的数据的首地址。
- *              sum     待排序的数据的数量。
+ *              count   待排序的数据的数量。
  * @return      0   操作成功。
  *              -1  pdata = nullptr
  * @author      xuchanglong
@@ -49,7 +49,7 @@ int InsertSort(T *pdata, size_t count)
 /**
  * @function    选择排序算法。
  * @paras       pdata   待排序的数据的首地址。
- *              sum     待排序的数据的数量。
+ *              count   待排序的数据的数量。
  * @return      0   操作成功。
  *              -1  pdata = nullptr
  * @author      xuchanglong
@@ -79,5 +79,72 @@ int SelectSort(T *pdata, size_t count)
         }
     }
 
+    return 0;
+}
+
+/**
+ * @function    归并排序算法的合并函数。
+ * @paras       pdata   待排序的数据的首地址。
+ *              s       待排序的数据的起始位置。
+ *              e       待排序的数据的结束位置。
+ * @return      0   操作成功。
+ *              -1  pdata = nullptr 。
+ * @author      xuchanglong
+ * @time        2019-08-22
+*/
+template <typename T>
+int _MergeSort(T *pdata, size_t s, size_t tmp, size_t e)
+{
+    if (pdata == nullptr)
+    {
+        return -1;
+    }
+}
+
+/**
+ * @function    归并排序算法的迭代函数。
+ * @paras       pdata   待排序的数据的首地址。
+ *              s       待排序的数据的起始位置。
+ *              e       待排序的数据的结束位置。
+ * @return      0   操作成功。
+ *              -1  pdata = nullptr 。
+ *              -2  不符合递归条件。
+ * @author      xuchanglong
+ * @time        2019-08-22
+*/
+template <typename T>
+int _MergeSort(T *pdata, size_t s, size_t e)
+{
+    size_t tmp = (s + e) / 2;
+    if (pdata == nullptr)
+    {
+        return -1;
+    }
+    if (s <= e)
+    {
+        return -2;
+    }
+    _MergeSort(pdata, s, tmp);
+    _MergeSort(pdata, tmp, e);
+    return 0;
+}
+
+/**
+ * @function    归并排序算法。
+ * @paras       pdata   待排序的数据的首地址。
+ *              count   待排序的数据的数量。
+ * @return      0   操作成功。
+ *              -1  pdata = nullptr 。
+ * @author      xuchanglong
+ * @time        2019-08-22
+*/
+template <typename T>
+int MergeSort(T *pdata, size_t count)
+{
+    if (pdata == nullptr)
+    {
+        return -1;
+    }
+    _MergeSort(pdata, 0, count);
     return 0;
 }
