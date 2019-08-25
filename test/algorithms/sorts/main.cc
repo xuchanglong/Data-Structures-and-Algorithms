@@ -5,13 +5,19 @@
 template <typename T>
 void Show(T *pdata, size_t count);
 
-    /**
+/**
     * 1    插入排序。
     * 2    选择排序。
     * 3    归并排序。
     */
 int main(int argc, const char *argv[])
 {
+    if (argc == 1)
+    {
+        std::cout << "请选择排序算法！" << std::endl;
+        return 1;
+    }
+
     int algtype = atoi(argv[1]);
     int testnum[10] = {13, 17, 3, 4, 5, 2, 6, 4, 8, 4};
 

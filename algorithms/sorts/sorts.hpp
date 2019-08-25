@@ -102,6 +102,10 @@ int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
     }
     T *ptmp = new T[e - s + 1];
     size_t i, t, k;
+
+    /**
+     * 两组数据合并。
+    */
     for (i = s, t = m + 1, k = 0; (i <= m) && (t <= e);)
     {
         if (pdata[i] <= pdata[t])
@@ -113,6 +117,7 @@ int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
             ptmp[k++] = pdata[t++];
         }
     }
+    
     /**
      * 将剩余的数据补充到排序好的数组中。
     */
@@ -161,7 +166,7 @@ int _MergeSort(T *pdata, const size_t &s, const size_t &e)
     }
     const size_t m = (s + e) >> 1;
     _MergeSort(pdata, s, m);
-    _MergeSort(pdata, m, e);
+    _MergeSort(pdata, m + 1, e);
     _Merge(pdata, s, m, e);
     return 0;
 }
