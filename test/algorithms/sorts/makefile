@@ -1,14 +1,14 @@
 CC := g++
 CFLAGS := -g -Wall
-TARGET := main
+TARGET := main.o
 
-ALGORITHMSDIR := ../../../Algorithms
+ALGORITHMSDIR := ../../../algorithms
 
 SORTSDIR := $(ALGORITHMSDIR)/sorts
 
 $(TARGET):main.cc $(SORTSDIR)/sorts.hpp
-	$(CC) $< -o $@ -I $(ALGORITHMSDIR)
+	$(CC) $< -o $@ -I $(ALGORITHMSDIR) $(CFLAGS)
 
 .PHONY:clean
 clean:
-	-rm  -rf main.exe main
+	-rm  -rf main.exe main.o
