@@ -151,7 +151,6 @@ int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
 template <typename T>
 int _MergeSort(T *pdata, const size_t &s, const size_t &e)
 {
-    const size_t m = (s + e) >> 1;
     if (pdata == nullptr)
     {
         return -1;
@@ -160,6 +159,7 @@ int _MergeSort(T *pdata, const size_t &s, const size_t &e)
     {
         return -2;
     }
+    const size_t m = (s + e) >> 1;
     _MergeSort(pdata, s, m);
     _MergeSort(pdata, m, e);
     _Merge(pdata, s, m, e);
