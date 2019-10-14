@@ -50,7 +50,7 @@ int Binary_Destroy(BinaryTree **root)
 
 /**
  * 前序遍历。
- * 对于树的任意节点，先打印本节点，再打印其左子树，最后打印其右子树。
+ * 打印顺序：本节点 -> 左子树 -> 右子树。
 */
 int BinaryTree_PreOrder(BinaryTree *root)
 {
@@ -66,7 +66,7 @@ int BinaryTree_PreOrder(BinaryTree *root)
 
 /**
  * 中序遍历。
- * 对于树的任意节点，先打印其左子树，再打印本节点，最后打印其右子树。
+ * 打印顺序：左子树 -> 本节点 -> 右子树
 */
 int BinaryTree_InOrder(BinaryTree *root)
 {
@@ -82,7 +82,7 @@ int BinaryTree_InOrder(BinaryTree *root)
 
 /**
  * 后序遍历。
- * 对于树的任意节点，先打印其左子树，再打印其右子树，最后打印本节点。
+ * 打印顺序：左子树 -> 右子树 -> 本节点。
 */
 int BinaryTree_PostOrder(BinaryTree *root)
 {
