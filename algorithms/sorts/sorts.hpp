@@ -1,7 +1,7 @@
 /**
  * @function    常用的排序算法的集合。
- * @author      xuchanglong
- * @time        2019-08-20
+ * @author  xuchanglong
+ * @time    2019-08-20
 */
 #include <cstddef>
 #include <string.h>
@@ -15,12 +15,12 @@
 /***************************************************  插入排序  ***************************************************/
 /**
  * @function    插入排序算法。
- * @paras       pdata   待排序的数据的首地址。
- *                      count   待排序的数据的数量。
- * @return      0   操作成功。
- *                      -1  pdata = nullptr
- * @author      xuchanglong
- * @time        2019-08-20
+ * @paras   pdata   待排序的数据的首地址。
+ *          count   待排序的数据的数量。
+ * @return  0   操作成功。
+ *          -1  pdata = nullptr
+ * @author  xuchanglong
+ * @time    2019-08-20
 */
 template <typename T>
 int InsertSort(T *pdata, size_t count)
@@ -48,12 +48,12 @@ int InsertSort(T *pdata, size_t count)
 /***************************************************  选择排序  ***************************************************/
 /**
  * @function    选择排序算法。
- * @paras       pdata   待排序的数据的首地址。
- *                      count   待排序的数据的数量。
- * @return      0   操作成功。
- *                      -1  pdata = nullptr
- * @author      xuchanglong
- * @time        2019-08-20
+ * @paras   pdata   待排序的数据的首地址。
+ *          count   待排序的数据的数量。
+ * @return  0   操作成功。
+ *          -1  pdata = nullptr
+ * @author  xuchanglong
+ * @time    2019-08-20
 */
 template <typename T>
 int SelectSort(T *pdata, size_t count)
@@ -84,14 +84,14 @@ int SelectSort(T *pdata, size_t count)
 /***************************************************  归并排序  ***************************************************/
 /**
  * @function    归并排序算法的合并函数。
- * @paras          pdata    待排序的数据的首地址。
- *                          s               待排序的数据的起始位置。
- *                          m             待排序的数据的中间位置。
- *                          e              待排序的数据的结束位置。
- * @return        0     操作成功。
- *                          -1   pdata = nullptr 。
- * @author      xuchanglong
- * @time          2019-08-22
+ * @paras   pdata   待排序的数据的首地址。
+ *          s   待排序的数据的起始位置。
+ *          m   待排序的数据的中间位置。
+ *          e   待排序的数据的结束位置。
+ * @return  0   操作成功。
+ *          -1  pdata = nullptr 。
+ * @author  xuchanglong
+ * @time    2019-08-22
 */
 template <typename T>
 int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
@@ -144,14 +144,14 @@ int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
 
 /**
  * @function    归并排序算法的迭代函数。
- * @paras       pdata   待排序的数据的首地址。
- *              s       待排序的数据的起始位置。
- *              e       待排序的数据的结束位置。
- * @return      0   操作成功。
- *              -1  pdata = nullptr 。
- *              -2  不符合递归条件。
- * @author      xuchanglong
- * @time        2019-08-22
+ * @paras   pdata   待排序的数据的首地址。
+ *          s   待排序的数据的起始位置。
+ *          e   待排序的数据的结束位置。
+ * @return  0   操作成功。
+ *          -1  pdata = nullptr 。
+ *          -2  不符合递归条件。
+ * @author  xuchanglong
+ * @time    2019-08-22
 */
 template <typename T>
 int _MergeSort(T *pdata, const size_t &s, const size_t &e)
@@ -173,12 +173,12 @@ int _MergeSort(T *pdata, const size_t &s, const size_t &e)
 
 /**
  * @function    归并排序算法。
- * @paras       pdata   待排序的数据的首地址。
- *              count   待排序的数据的数量。
- * @return      0   操作成功。
- *              -1  pdata = nullptr 。
- * @author      xuchanglong
- * @time        2019-08-22
+ * @paras   pdata   待排序的数据的首地址。
+ *          count   待排序的数据的数量。
+ * @return  0   操作成功。
+ *          -1  pdata = nullptr 。
+ * @author  xuchanglong
+ * @time    2019-08-22
 */
 template <typename T>
 int MergeSort(T *pdata, const size_t &count)
