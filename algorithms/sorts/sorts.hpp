@@ -129,6 +129,11 @@ int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
     */
     for (i = s, t = m + 1, k = 0; (i <= m) && (t <= e);)
     {
+        /**
+         * 该等号的位置保证了排序算法的稳定性。
+         * 因为前后两部分合并时，当发现有相同元素时，首先将属于前一部分的元素复制到临时数组中，
+         * 从而保证了排序算法的稳定性。
+        */
         if (pdata[i] <= pdata[t])
         {
             ptmp[k++] = pdata[i++];
@@ -185,6 +190,9 @@ int _MergeSort(T *pdata, const size_t &s, const size_t &e)
     {
         return -2;
     }
+    /**
+     * 求解 s 和 e 的中间值。
+    */
     const size_t m = (s + e) >> 1;
     _MergeSort(pdata, s, m);
     _MergeSort(pdata, m + 1, e);
