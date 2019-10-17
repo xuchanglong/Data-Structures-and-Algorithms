@@ -7,11 +7,13 @@
 #include <string.h>
 
 #define SWAP(x, y)  \
+    do              \
     {               \
         (x) ^= (y); \
         (y) ^= (x); \
         (x) ^= (y); \
-    }
+    } while (false)
+
 /***************************************************  插入排序  ***************************************************/
 /**
  * @function    插入排序算法。
@@ -21,9 +23,10 @@
  *          -1  pdata = nullptr
  * @author  xuchanglong
  * @time    2019-08-20
+ * @notice  数据从小到大排列。
 */
 template <typename T>
-int InsertSort(T *pdata, size_t count)
+int InsertSort(T *pdata, const size_t &count)
 {
     if (pdata == nullptr)
     {
@@ -35,16 +38,27 @@ int InsertSort(T *pdata, size_t count)
     {
         tmp = pdata[i];
         k = i - 1;
+        /**
+         * 查找插入位置。
+         * 比较时没有等号，故该算法是稳定排序算法。
+        */
         while ((k >= 0) && (pdata[k] > tmp))
         {
+            /**
+             * 数据移动。
+            */
             pdata[k + 1] = pdata[k];
             k--;
         }
+        /**
+         * 插入数据。
+        */
         pdata[k + 1] = tmp;
     }
 
     return 0;
 }
+
 /***************************************************  选择排序  ***************************************************/
 /**
  * @function    选择排序算法。
@@ -56,7 +70,7 @@ int InsertSort(T *pdata, size_t count)
  * @time    2019-08-20
 */
 template <typename T>
-int SelectSort(T *pdata, size_t count)
+int SelectSort(T *pdata, const size_t &count)
 {
     size_t imin = 0;
     if (pdata == nullptr)
@@ -66,6 +80,9 @@ int SelectSort(T *pdata, size_t count)
     for (size_t i = 0; i < count - 1; i++)
     {
         imin = i;
+        /**
+         * 从未排序部分中查找最小值。
+        */
         for (size_t k = i + 1; k < count; k++)
         {
             if (pdata[k] < pdata[imin])
@@ -73,6 +90,9 @@ int SelectSort(T *pdata, size_t count)
                 imin = k;
             }
         }
+        /**
+         * 将查到的最小值和当前值进行交换。
+        */
         if (i != imin)
         {
             SWAP(pdata[i], pdata[imin]);
@@ -81,6 +101,7 @@ int SelectSort(T *pdata, size_t count)
 
     return 0;
 }
+
 /***************************************************  归并排序  ***************************************************/
 /**
  * @function    归并排序算法的合并函数。
@@ -117,7 +138,7 @@ int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
             ptmp[k++] = pdata[t++];
         }
     }
-    
+
     /**
      * 将剩余的数据补充到排序好的数组中。
     */
