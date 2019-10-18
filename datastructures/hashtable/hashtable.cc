@@ -1,47 +1,311 @@
-/**
- * 一、散列思想
- *     通过散列函数通过 Key 值计算得出数组下标，然后利用数组支持下标随机访问的特性，
- * 在时间复杂度为O(1)的情况下找到所需要的信息。
- * 
- *              散列函数
- *       Key -------------> 散列值（哈希值）
- *            （哈希函数）
- * 
- * 二、散列函数
- *     顾名思义，其是一个函数，函数原型大概如下：
- *          size_t hash(key);
- *     要求，
- *      1、散列值是非负整数。
- *      2、若 key1 = key2，则 hash(key1) == hash(key2) 。
- *      3、若 key1 != key2，则 hash(key1) != hash(key2) 。
- * 拓展，哈希算法：MD5、SHA、CRC。
- * 
- * 三、散列冲突
- * 定义：当 key1 != key2 时，hash(key1) == hash(key2) 。
- * 解决办法：
- * 1、开放寻址法
- * 定义：当出现散列冲突时，在数组中重新探测一个空闲位置，将数据插入到该位置中。
- * （1）线性探测（Linear Probing）
- *      a、冲突之后，从当前位置依次向后查找（步长为1），直到找到空闲位置将数据插入到该位置。
- *      b、上述操作之后没有发现空闲位置，则从数组的起始位置开始查找空闲位置。
- * （2）二次探测
- *      与线性探测类似，唯一的不同点，线性探测探测步长为1，而二次探测的探测
- *  步长是当前步长的2次方。
- * （3）双重散列
- *      存在多个散列函数，当其中一个函数出现了散列冲突，则使用第2个散列函数，
- *  依次类推，直到不存在散列冲突位置。
- * 2、链表法（常用）
- *      在散列表中每一项不再存放数据，而是存放一个链表的首地址，该链表存放与该
- *  散列值相同的数据。
- *      时间复杂度就是这些链表的长度，假设为k，时间复杂度为 O(k) 。
- * 
- * 四、装载因子（load factor）
- *      装载因子 = 填入表中的元素个数 / 散列表的长度 。
- *      装载因子越大，则空闲位置越少，冲突越多，散列表的性能就越低，
- *  时间复杂度最坏情况从 O(1) 降到 O(n) 。
- * 
- * 五、散列表碰撞攻击的原理
- *      对于使用链表法解决散列冲突的散列表，攻击者精心制作数据，使得这些数据
- *  全部都散列到散列表同一个位置，导致散列表退化为链表，时间复杂度直接将为了
- *  O(n)。查询的过程中直接导致CPU资源耗尽，导致服务器无法相应其他需求。
-*/
+#include <iostream>
+#include <memory.h>
+
+/*
+ *	定义键值类型。
+ */
+typedef int KeyType;
+
+/*
+ *	声明函数返回值。
+ */
+enum eHashStatus
+{
+    HASH_SUCCESS = 0,
+    HASH_UNSUCCESS,
+    HASH_OVERFLOW,
+};
+
+/*
+ *	声明记录类型。
+ */
+struct RcdType
+{
+    /*
+	 *	关键字
+	 */
+    KeyType Key;
+};
+
+/*
+ *	声明哈希表。
+ */
+struct sHashTable
+{
+    /*
+	 *	记录存储基址。
+	 */
+    RcdType *pRcd;
+    /*
+	 *	关键字状态标记。
+	 *	0	空。
+	 *	1	有效。
+	 *	2	已删除。
+	 */
+    int *pTag;
+    /*
+	 *	当前哈希表中含有的记录数量。
+	 */
+    int count;
+    /*
+	 *	哈希表容量。
+	 */
+    int size;
+};
+
+int Index = 0;
+int HashTableSize[2] = {11, 31};
+
+/*
+ * 	function	哈希表的初始化。
+ *	paras		H		哈希表
+ *				size	哈希表中元素个数。
+ *	return		函数执行状态。
+ */
+auto InitHashTable(sHashTable &H, const int &iSum) -> eHashStatus
+{
+    H.pRcd = (RcdType *)malloc(sizeof(KeyType) * iSum);
+    H.pTag = (int *)malloc(sizeof(int) * iSum);
+
+    if (
+        (H.pRcd == nullptr) ||
+        (H.pTag == nullptr))
+    {
+        return HASH_OVERFLOW;
+    }
+
+    memset(H.pRcd, 0, sizeof(RcdType) * iSum);
+    memset(H.pTag, 0, sizeof(int) * iSum);
+
+    H.count = 0;
+    H.size = iSum;
+
+    return HASH_SUCCESS;
+}
+
+/*
+ *	哈希函数。
+ */
+auto Hash(const KeyType &Key, const int &size) -> int
+{
+    /*
+	 *	保证 hash 值不会超过 m 。
+	 */
+    return Key * 3 % size;
+}
+
+/*
+ *	线性探测法处理冲突。
+ */
+auto Collision(int &pos, const int &size) -> void
+{
+    /*
+	 *	保证 hash 值不会超过 m 。
+	 */
+    pos = (pos + 1) % size;
+}
+
+/*
+ *	打印哈希表。
+ */
+auto PrintHashTable(const sHashTable &H) -> void
+{
+    std::cout << "Rcd :";
+    for (size_t i = 0; i < H.size; ++i)
+    {
+        std::cout << H.pRcd[i].Key << " ";
+    }
+    std::cout << std::endl;
+
+    for (size_t i = 0; i < H.size; ++i)
+    {
+        std::cout << H.pTag[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+auto ReCreateHashTable(sHashTable &H) -> eHashStatus;
+
+/*
+ *	function    哈希表的查找。
+ *	paras   H   哈希表
+ *			Key	待查找的 Key
+ *			pos	该 key 在表中的位置。
+ *			count   该 key 在表中冲突的次数。
+ */
+auto SearchRcd(const sHashTable &H, const KeyType &Key, int &pos, int &count) -> eHashStatus
+{
+    pos = Hash(Key, H.size);
+    count = 0;
+    /*
+	 *	冲突处理。
+	 */
+    while (
+        /*
+		*   该位置有效且报错的 Key 和待查找的 Key 不一样，则继续跳过。
+		*/
+        (
+            (H.pTag[pos] == 1) &&
+            (H.pRcd[pos].Key != Key)) ||
+        /*
+		*	若该位置的关键字已经删除，则继续跳过。
+		*/
+        (H.pTag[pos] == -1))
+    {
+        Collision(pos, H.size);
+        ++count;
+    }
+
+    if ((H.pTag[pos] == 1) && (H.pRcd[pos].Key == Key))
+    {
+        return HASH_SUCCESS;
+    }
+    else
+    {
+        return HASH_UNSUCCESS;
+    }
+}
+
+/*
+ *	插入。
+ */
+auto InsertRcd(sHashTable &H, const KeyType &Key) -> eHashStatus
+{
+    int pos, count;
+    /*
+	 *	没有相同key。
+	 */
+    if (HASH_UNSUCCESS == SearchRcd(H, Key, pos, count))
+    {
+        /*
+		 *	冲突次数未达到上线。
+		 */
+        if ((count * 1.0f / H.size) < 0.5)
+        {
+            /*
+			 *	插入 Key 。
+			 */
+            H.pRcd[pos].Key = Key;
+            H.pTag[pos] = 1;
+            ++H.count;
+        }
+        /*
+		 *	熵太高，直接重构。
+		 */
+        else
+        {
+            ReCreateHashTable(H);
+        }
+    }
+    else
+    {
+        return HASH_UNSUCCESS;
+    }
+    return HASH_SUCCESS;
+}
+
+/*
+ *	销毁哈希表中指定的记录。
+ */
+auto DeleteRcd(sHashTable &H, const KeyType &Key) -> eHashStatus
+{
+    int pos, count;
+    if (HASH_SUCCESS == SearchRcd(H, Key, pos, count))
+    {
+        /*
+		 *	删除代码。
+		 */
+        H.pTag[pos] = -1;
+        --H.count;
+    }
+    else
+    {
+        return HASH_UNSUCCESS;
+    }
+    return HASH_SUCCESS;
+}
+/*
+ *	重构。
+ */
+auto ReCreateHashTable(sHashTable &H) -> eHashStatus
+{
+    RcdType *pRcd = H.pRcd;
+    int *pTag = H.pTag;
+    int size = H.size;
+
+    if (InitHashTable(H, HashTableSize[Index++]) == HASH_SUCCESS)
+    {
+        /*
+		 *	将现有的有效的 Key 重新放入新的 Hash Table 中。
+		 *	各个 Key 与之前的位置不在一样。
+		 */
+        for (int i = 0; i < size; ++i)
+        {
+            if (pTag[i] == 1)
+            {
+                InsertRcd(H, pRcd[i].Key);
+            }
+        }
+    }
+    else
+    {
+        return HASH_UNSUCCESS;
+    }
+    return HASH_SUCCESS;
+}
+
+int main()
+{
+    sHashTable H;
+    KeyType array[] = {22, 41, 53, 46, 30, 13, 12, 67};
+    KeyType Key;
+
+    std::cout << "-----------  创建 Hash Table  -----------" << std::endl;
+    std::cout << "初始化 Hash Table";
+    if (HASH_UNSUCCESS == InitHashTable(H, HashTableSize[Index++]))
+    {
+        std::cout << "Initialization failed" << std::endl;
+        return 1;
+    }
+
+    std::cout << std::endl;
+
+    std::cout << "插入 Hash Table " << std::endl;
+    for (const KeyType &Key : array)
+    {
+        InsertRcd(H, Key);
+        PrintHashTable(H);
+    }
+
+    std::cout << std::endl;
+
+    std::cout << "删除 Hash Table 中记录" << std::endl;
+    if (HASH_UNSUCCESS == DeleteRcd(H, 12))
+    {
+        std::cout << "Failed to delete." << std::endl;
+    }
+    PrintHashTable(H);
+
+    std::cout << std::endl;
+
+    std::cout << "搜索 Hash Table 中记录" << std::endl;
+    int pos;
+    int count;
+    if (HASH_UNSUCCESS == SearchRcd(H, 67, pos, count))
+    {
+        std::cout << "Failed to search." << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    std::cout << "再次向 Hash Table 中插入记录，测试重构" << std::endl;
+    KeyType array1[8] = {27, 47, 57, 47, 37, 17, 93, 67};
+    for (const KeyType &Key : array1)
+    {
+        InsertRcd(H, Key);
+        PrintHashTable(H);
+    }
+
+    std::cin.get();
+    return 0;
+}
