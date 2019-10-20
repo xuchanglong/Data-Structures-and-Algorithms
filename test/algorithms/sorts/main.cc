@@ -6,9 +6,10 @@ template <typename T>
 void Show(T *pdata, size_t count);
 
 /**
-    * 1    插入排序。
-    * 2    选择排序。
-    * 3    归并排序。
+    * 1     插入排序。
+    * 2     选择排序。
+    * 3     归并排序。
+    * 4     快速排序
     */
 int main(int argc, const char *argv[])
 {
@@ -37,6 +38,10 @@ int main(int argc, const char *argv[])
     case 3:
         std::cout << "归并排序，";
         MergeSort(testnum, 10);
+        break;
+    case 4:
+        std::cout << "快速排序，";
+        QuickeSort(testnum, 10);
         break;
     default:
         break;

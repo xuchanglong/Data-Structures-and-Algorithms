@@ -237,12 +237,23 @@ int MergeSort(T *pdata, const size_t &count)
  ******* 快速排序 *******
  * 
 **************************************/
+/**
+ * @function    分区函数。将数组 pdata 以 pivot 为中间值分成前后两个部分，  
+ *              前面是小于该中间值的，后面是大于该中间值的。最后返回该中间值
+ *              所在的位置。
+ * @praras  pdata   待分区的数组。
+ *          s   数组的开始位置。
+ *          e   数组的结束位置。
+ * @return  中间值所在的位置。
+ * @author  xuchanglong
+ * @time    2019-10-21
+*/
 template <typename T>
-int Partition(T *pdata, size_t s, size_t e)
+int Partition(T *pdata, int s, int e)
 {
     int i, k;
     i = k = s;
-    for (; k <= e; k++)
+    for (; k < e; k++)
     {
         if (pdata[k] < pdata[e])
         {
@@ -253,27 +264,50 @@ int Partition(T *pdata, size_t s, size_t e)
             ++i;
         }
     }
-    SWAP(*(pdata + i), *(pdata + e));
+    if (i != e)
+    {
+        SWAP(*(pdata + i), *(pdata + e));
+    }
     return i;
 }
 
+/**
+ * @function    快速排序的递归函数。
+ * @paras  pdata   待排序的数组。
+ *          s   数组的开始位置。
+ *          e   数组的结束位置。
+ * @return  -1  数组内容不存在。
+ *          1   不符合递归。
+ *          0   完成递归。
+ * @author  xuchanglong
+ * @time    2019-10-21
+*/
 template <typename T>
-int _QuickeSort(T *pdata, size_t s, size_t e)
+int _QuickeSort(T *pdata, int s, int e)
 {
     if (pdata == nullptr)
     {
         return -1;
     }
-    if (e <= s)
+    if (s >= e)
     {
-        return -2;
+        return 1;
     }
-    size_t q = Partition(pdata, s, e);
-    _QuickeSort(pdata, s, q);
+    int q = Partition(pdata, s, e);
+    _QuickeSort(pdata, s, q - 1);
     _QuickeSort(pdata, q + 1, e);
     return 0;
 }
 
+/**
+ * @function    快速排序的入口函数。
+ * @paras   pdata   待排序的数组。
+ *          count   数组的大小。
+ * @return  -1  数组不存在。
+ *          0   完成排序。
+ * @author  xuchanglong
+ * @time    2019-10-21
+*/
 template <typename T>
 int QuickeSort(T *pdata, size_t count)
 {
