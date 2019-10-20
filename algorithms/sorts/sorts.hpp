@@ -14,7 +14,11 @@
         (x) ^= (y); \
     } while (false)
 
-/***************************************************  插入排序  ***************************************************/
+/**************************************
+ * 
+ ******* 插入排序 *******
+ * 
+**************************************/
 /**
  * @function    插入排序算法。
  * @paras   pdata   待排序的数据的首地址。
@@ -59,7 +63,11 @@ int InsertSort(T *pdata, const size_t &count)
     return 0;
 }
 
-/***************************************************  选择排序  ***************************************************/
+/**************************************
+ * 
+ ******* 选择排序 *******
+ * 
+**************************************/
 /**
  * @function    选择排序算法。
  * @paras   pdata   待排序的数据的首地址。
@@ -102,7 +110,11 @@ int SelectSort(T *pdata, const size_t &count)
     return 0;
 }
 
-/***************************************************  归并排序  ***************************************************/
+/**************************************
+ * 
+ ******* 归并排序 *******
+ * 
+**************************************/
 /**
  * @function    归并排序算法的合并函数。
  * @paras   pdata   待排序的数据的首地址。
@@ -218,4 +230,52 @@ int MergeSort(T *pdata, const size_t &count)
     }
     _MergeSort(pdata, 0, count - 1);
     return 0;
+}
+
+/**************************************
+ * 
+ ******* 快速排序 *******
+ * 
+**************************************/
+template <typename T>
+int Partition(T *pdata, size_t s, size_t e)
+{
+    int i, k;
+    i = k = s;
+    for (; k <= e; k++)
+    {
+        if (pdata[k] < pdata[e])
+        {
+            if (i != k)
+            {
+                SWAP(*(pdata + i), *(pdata + k));
+            }
+            ++i;
+        }
+    }
+    SWAP(*(pdata + i), *(pdata + e));
+    return i;
+}
+
+template <typename T>
+int _QuickeSort(T *pdata, size_t s, size_t e)
+{
+    if (pdata == nullptr)
+    {
+        return -1;
+    }
+    if (e <= s)
+    {
+        return -2;
+    }
+    size_t q = Partition(pdata, s, e);
+    _QuickeSort(pdata, s, q);
+    _QuickeSort(pdata, q + 1, e);
+    return 0;
+}
+
+template <typename T>
+int QuickeSort(T *pdata, size_t count)
+{
+    return _QuickeSort(pdata, 0, count - 1);
 }
