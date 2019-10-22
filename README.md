@@ -31,6 +31,7 @@ Data-Structures-and-Algorithms
    * 归并排序
    * 快速排序
    * 桶排序
+   * 计数排序
 
 #### 2、数据结构
 ##### （1）链表

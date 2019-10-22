@@ -24,7 +24,7 @@
 /**
  * @function    插入排序算法。
  * @paras   pdata   待排序的数据的首地址。
- *          kCount   待排序的数据的数量。
+ *          kCount  待排序的数据的数量。
  * @ret 0   操作成功。
  *      -1  pdata = nullptr
  * @time    2019-08-20
@@ -72,7 +72,7 @@ int InsertSort(T *pdata, const size_t &kCount)
 /**
  * @function    选择排序算法。
  * @paras   pdata   待排序的数据的首地址。
- *          kCount   待排序的数据的数量。
+ *          kCount  待排序的数据的数量。
  * @ret 0   操作成功。
  *      -1  pdata = nullptr
  * @time    2019-08-20
@@ -213,7 +213,7 @@ int _MergeSort(T *pdata, const size_t &s, const size_t &e)
 /**
  * @function    归并排序算法。
  * @paras   pdata   待排序的数据的首地址。
- *          kCount   待排序的数据的数量。
+ *          kCount  待排序的数据的数量。
  * @ret 0   操作成功。
  *      -1  pdata = nullptr 。
  * @time    2019-08-22
@@ -270,8 +270,8 @@ int Partition(T *pdata, int s, int e)
 /**
  * @function    快速排序的递归函数。
  * @paras  pdata   待排序的数组。
- *          s   数组的开始位置。
- *          e   数组的结束位置。
+ *         s    数组的开始位置。
+ *         e    数组的结束位置。
  * @ret -1  数组内容不存在。
  *      1   不符合递归。
  *      0   完成递归。
@@ -297,7 +297,7 @@ int _QuickeSort(T *pdata, int s, int e)
 /**
  * @function    快速排序的入口函数。
  * @paras   pdata   待排序的数组。
- *          kCount   数组的大小。
+ *          kCount  数组的大小。
  * @ret -1  数组不存在。
  *      0   完成排序。
  * @time    2019-10-21
@@ -316,10 +316,10 @@ int QuickeSort(T *pdata, const size_t &kCount)
 /**
  * @function    桶排序的入口函数。
  * @paras   pdata   待排序的数组。
- *          kCount   数组的大小。
+ *          kCount  数组的大小。
  * @ret -1  数组不存在。
  *      0   完成排序。
- * @time    2019-10-21
+ * @time    2019-10-22
 */
 template <size_t kBucketSize,
           typename T,
@@ -376,5 +376,71 @@ int BucketSort(T *pdata, const size_t &kCount, Compare comp = Compare())
     }
 
     memcpy(pdata, &vdata[0], sizeof(T) * vdata.size());
+    return 0;
+}
+
+/*********************************************************
+ * 
+ ******* 计数排序 *******
+ * 
+*********************************************************/
+/**
+ * @function    计数排序的入口函数。
+ * @paras   pdata   待排序的数组。
+ *          kCount  数组的大小。
+ * @ret -1  数组不存在。
+ *      0   完成排序。
+ * @time    2019-10-22
+*/
+template <typename T>
+int CountingSort(T *pdata, const size_t &kCount)
+{
+    /**
+     * 将数组压入 vector 中。
+    */
+    std::vector<T> vdata(pdata, pdata + kCount);
+    auto first = vdata.begin();
+    auto last = vdata.end();
+    size_t count = 0;
+    count = std::distance(first, last);
+    T max = *std::max_element(first, last);
+
+    /**
+     * 创建桶的集合，共 max + 1 个。
+    */
+    std::vector<size_t> vbucket(max + 1);
+
+    /**
+     * 将数据放入桶中。
+    */
+    for (auto it = first; it != last; it++)
+    {
+        ++vbucket[*it];
+    }
+
+    /**
+     * 计算每个桶加上之前所有桶的数之和。
+    */
+    for (auto i = 1; i <= max + 1; i++)
+    {
+        vbucket[i] += vbucket[i - 1];
+    }
+
+    /**
+     * 排序！
+    */
+    std::vector<T> vtmp(count);
+    for (auto it = first; it != last; it++)
+    {
+        T t = *it;
+        size_t pos = vbucket[t];
+        vtmp[pos - 1] = t;
+        --vbucket[t];
+    }
+
+    /**
+     * 将数据返回。
+    */
+    memcpy(pdata, &vtmp[0], sizeof(T) * count);
     return 0;
 }
