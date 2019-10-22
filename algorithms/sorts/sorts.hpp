@@ -5,6 +5,9 @@
 */
 #include <cstddef>
 #include <string.h>
+#include <vector>
+#include <algorithm>
+#include <functional>
 
 #define SWAP(x, y)  \
     do              \
@@ -14,15 +17,15 @@
         (x) ^= (y); \
     } while (false)
 
-/**************************************
+/*********************************************************
  * 
  ******* 插入排序 *******
  * 
-**************************************/
+*********************************************************/
 /**
  * @function    插入排序算法。
  * @paras   pdata   待排序的数据的首地址。
- *          count   待排序的数据的数量。
+ *          kCount   待排序的数据的数量。
  * @return  0   操作成功。
  *          -1  pdata = nullptr
  * @author  xuchanglong
@@ -30,7 +33,7 @@
  * @notice  数据从小到大排列。
 */
 template <typename T>
-int InsertSort(T *pdata, const size_t &count)
+int InsertSort(T *pdata, const size_t &kCount)
 {
     if (pdata == nullptr)
     {
@@ -38,7 +41,7 @@ int InsertSort(T *pdata, const size_t &count)
     }
     int k = 0;
     T tmp;
-    for (size_t i = 1; i < count; i++)
+    for (size_t i = 1; i < kCount; i++)
     {
         tmp = pdata[i];
         k = i - 1;
@@ -63,35 +66,35 @@ int InsertSort(T *pdata, const size_t &count)
     return 0;
 }
 
-/**************************************
+/*********************************************************
  * 
  ******* 选择排序 *******
  * 
-**************************************/
+*********************************************************/
 /**
  * @function    选择排序算法。
  * @paras   pdata   待排序的数据的首地址。
- *          count   待排序的数据的数量。
+ *          kCount   待排序的数据的数量。
  * @return  0   操作成功。
  *          -1  pdata = nullptr
  * @author  xuchanglong
  * @time    2019-08-20
 */
 template <typename T>
-int SelectSort(T *pdata, const size_t &count)
+int SelectSort(T *pdata, const size_t &kCount)
 {
     size_t imin = 0;
     if (pdata == nullptr)
     {
         return -1;
     }
-    for (size_t i = 0; i < count - 1; i++)
+    for (size_t i = 0; i < kCount - 1; i++)
     {
         imin = i;
         /**
          * 从未排序部分中查找最小值。
         */
-        for (size_t k = i + 1; k < count; k++)
+        for (size_t k = i + 1; k < kCount; k++)
         {
             if (pdata[k] < pdata[imin])
             {
@@ -110,11 +113,11 @@ int SelectSort(T *pdata, const size_t &count)
     return 0;
 }
 
-/**************************************
+/*********************************************************
  * 
  ******* 归并排序 *******
  * 
-**************************************/
+*********************************************************/
 /**
  * @function    归并排序算法的合并函数。
  * @paras   pdata   待排序的数据的首地址。
@@ -215,28 +218,28 @@ int _MergeSort(T *pdata, const size_t &s, const size_t &e)
 /**
  * @function    归并排序算法。
  * @paras   pdata   待排序的数据的首地址。
- *          count   待排序的数据的数量。
+ *          kCount   待排序的数据的数量。
  * @return  0   操作成功。
  *          -1  pdata = nullptr 。
  * @author  xuchanglong
  * @time    2019-08-22
 */
 template <typename T>
-int MergeSort(T *pdata, const size_t &count)
+int MergeSort(T *pdata, const size_t &kCount)
 {
     if (pdata == nullptr)
     {
         return -1;
     }
-    _MergeSort(pdata, 0, count - 1);
+    _MergeSort(pdata, 0, kCount - 1);
     return 0;
 }
 
-/**************************************
+/*********************************************************
  * 
  ******* 快速排序 *******
  * 
-**************************************/
+*********************************************************/
 /**
  * @function    分区函数。将数组 pdata 以 pivot 为中间值分成前后两个部分，  
  *              前面是小于该中间值的，后面是大于该中间值的。最后返回该中间值
@@ -302,14 +305,86 @@ int _QuickeSort(T *pdata, int s, int e)
 /**
  * @function    快速排序的入口函数。
  * @paras   pdata   待排序的数组。
- *          count   数组的大小。
+ *          kCount   数组的大小。
  * @return  -1  数组不存在。
  *          0   完成排序。
  * @author  xuchanglong
  * @time    2019-10-21
 */
 template <typename T>
-int QuickeSort(T *pdata, size_t count)
+int QuickeSort(T *pdata, const size_t &kCount)
 {
-    return _QuickeSort(pdata, 0, count - 1);
+    return _QuickeSort(pdata, 0, kCount - 1);
+}
+
+/*********************************************************
+ * 
+ ******* 桶排序 *******
+ * 
+*********************************************************/
+/**
+ * @function    桶排序的入口函数。
+ * @paras   pdata   待排序的数组。
+ *          kCount   数组的大小。
+ * @return  -1  数组不存在。
+ *          0   完成排序。
+ * @author  xuchanglong
+ * @time    2019-10-21
+*/
+template <size_t kBucketSize,
+          typename T,
+          typename Compare = std::less<T>>
+int BucketSort(T *pdata, const size_t &kCount, Compare comp = Compare())
+{
+    if (pdata == nullptr)
+    {
+        return -1;
+    }
+    std::vector<T> vdata(pdata, pdata + kCount);
+    auto first = vdata.begin();
+    auto last = vdata.end();
+    const T min = *std::min_element(first, last);
+    const T max = *std::max_element(first, last);
+    const T range = max - min + 1;
+
+    /**
+     * 获取桶的数量。
+    */
+    const size_t kBucketCount = range / kBucketSize + 1;
+
+    /**
+     * 建立一个桶的集合。
+    */
+    std::vector<std::vector<T>> vbucketset(kBucketCount);
+
+    /**
+     * 为每个桶预留桶大小的 2 倍的空间。
+    */
+    for (auto bucket : vbucketset)
+    {
+        bucket.reserve(2 * kBucketSize);
+    }
+    /**
+     * 将数据均匀分配到桶内。
+    */
+    for (auto it = first; it != last; ++it)
+    {
+        size_t pos = (*it - min) / kBucketSize;
+        vbucketset[pos].emplace_back(*it);
+    }
+
+    /**
+     * 对每个桶内的数据进行从小到大的排序
+     * 并将结果依次覆盖原始数据中。
+    */
+    auto dest = first;
+    for (auto it : vbucketset)
+    {
+        std::sort(it.begin(), it.end(), comp);
+        std::copy(it.begin(), it.end(), dest);
+        dest += it.size();
+    }
+
+    memcpy(pdata, &vdata[0], sizeof(T) * vdata.size());
+    return 0;
 }
