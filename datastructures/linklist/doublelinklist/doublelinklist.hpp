@@ -1,7 +1,6 @@
 /**
  * @function    双向链表实现类。
- * @author      xuchanglong
- * @time        2019-08-08
+ * @time    2019-08-08
  */
 #ifndef DATA_STRUCTURES_LINKLIST_DOUBLELINKLIST_DOUBLELINKLIST_HPP_
 #define DATA_STRUCTURES_LINKLIST_DOUBLELINKLIST_DOUBLELINKLIST_HPP_
@@ -30,10 +29,9 @@ public:
 public:
     /**
      * @function    创建双向链表。
-     * @paras       none 。
-     * @return      none 。
-     * @author      xuchanglong
-     * @time        2019-08-08
+     * @paras   none 。
+     * @ret none 。
+     * @time    2019-08-08
      */
     void Create()
     {
@@ -45,10 +43,9 @@ public:
 
     /**
      * @function    创建双向链表。
-     * @paras       none 。
-     * @return      none 。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   none 。
+     * @ret none 。
+     * @time    2019-08-09
      */
     void Create(size_t maxsize)
     {
@@ -60,10 +57,9 @@ public:
 
     /**
      * @function    销毁双向链表。
-     * @paras       none 。
-     * @return      none 。
-     * @author      xuchanglong
-     * @time        2019-08-08
+     * @paras   none 。
+     * @ret none 。
+     * @time    2019-08-08
      */
     void Destroy()
     {
@@ -83,12 +79,11 @@ public:
 
     /**
      * @function    向链表的头部插入新的数据。
-     * @paras       pdata   待插入的数据。
-     * @return      0   操作成功。
-     *              -1  pdata == nullptr
-     *              -2  链表已满。
-     * @author      xuchanglong
-     * @time        2019-08-08
+     * @paras   pdata   待插入的数据。
+     * @ret 0   操作成功。
+     *      -1  pdata == nullptr
+     *      -2  链表已满。
+     * @time    2019-08-08
      */
     int InsertHead(T *pdata)
     {
@@ -122,12 +117,11 @@ public:
 
     /**
      * @function    向链表的尾部插入新的数据。
-     * @paras       pdata   待插入的数据。
-     * @return      0   操作成功。
-     *              -1  pdata == nullptr
-     *              -2  链表已满。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   pdata   待插入的数据。
+     * @ret 0   操作成功。
+     *      -1  pdata == nullptr
+     *      -2  链表已满。
+     * @time    2019-08-09
      */
     int InsertTail(T *pdata)
     {
@@ -160,11 +154,10 @@ public:
 
     /**
      * @function    删除链表中指定的节点。
-     * @paras       pnode   待删除的节点。
-     * @return      0   操作成功。
-     *              -1  pnode == nullptr
-     * @author      xuchanglong
-     * @time        2019-08-08
+     * @paras   pnode   待删除的节点。
+     * @ret 0   操作成功。
+     *      -1  pnode == nullptr
+     * @time    2019-08-08
      */
     int RemoveNode(DoubleLinkListNode<T> *&pnode)
     {
@@ -210,11 +203,10 @@ public:
 
     /**
      * @function    搜索链表中指定数据的节点，并返回第一个。（从头部开始搜索）
-     * @paras       data   待搜索的数据。
-     * @return      非空    操作成功。
-     *              空      未找到指定数据的节点。
-     * @author      xuchanglong
-     * @time        2019-08-08
+     * @paras   data   待搜索的数据。
+     * @ret 非nullptr   操作成功。
+     *      nullptr 未找到指定数据的节点。
+     * @time    2019-08-08
      */
     DoubleLinkListNode<T> *SearchNode(T *data)
     {
@@ -232,10 +224,9 @@ public:
 
     /**
      * @function    返回头部节点。
-     * @paras       none 。
-     * @return      头部节点。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   none 。
+     * @ret 头部节点。
+     * @time    2019-08-09
      */
     DoubleLinkListNode<T> *Head()
     {
@@ -244,10 +235,8 @@ public:
 
     /**
      * @function    返回尾部节点。
-     * @paras       none 。
-     * @return      尾部节点。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   none 。
+     * @time    2019-08-09
      */
     DoubleLinkListNode<T> *Tail()
     {
@@ -256,10 +245,9 @@ public:
 
     /**
      * @function    返回链表中节点数量。
-     * @paras       none 。
-     * @return      链表中的节点数量。
-     * @author      xuchanglong
-     * @time        2019-08-08
+     * @paras   none 。
+     * @ret 链表中的节点数量。
+     * @time    2019-08-08
      */
     size_t Size()
     {
@@ -268,10 +256,9 @@ public:
 
     /**
      * @function    返回链表中节点数量上限。
-     * @paras       none 。
-     * @return      链表中的节点数量。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   none 。
+     * @ret 链表中的节点数量。
+     * @time    2019-08-09
      */
     size_t MaxSize()
     {
@@ -280,10 +267,9 @@ public:
 
     /**
      * @function    返回该链表是否为空的标志。
-     * @paras       none 。
-     * @return      true，为空，反之为false。
-     * @author      xuchanglong
-     * @time        2019-08-08
+     * @paras   none 。
+     * @ret true，为空，反之为false。
+     * @time    2019-08-08
      */
     bool isEmpty()
     {

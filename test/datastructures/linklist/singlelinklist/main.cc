@@ -1,6 +1,5 @@
 /**
  * @function    linklist/singlelinklist/singlelinklist.hpp 的单元测试代码。
- * @author       xuchanglong
  * @time            2019-08-09
  */
 #include "linklist/singlelinklist/singlelinklist.hpp"
@@ -9,21 +8,19 @@
 
 /**
  * @function    依次从链表中取出元素，显示到控制台上。
- * @paras         kSLinkList   单向链表。
- * @return       none。
- * @author      xuchanglong
- * @time           2019-08-09
+ * @paras   kSLinkList   单向链表。
+ * @ret none。
+ * @time    2019-08-09
  */
 template <typename T>
 void ShowSingleLinkList(SingleLinkList<T> &kSLinkList);
 
 /**
  * @function    针对不同存储类型的链表，进行测试。
- * @paras       pdata       待测试的数组。
- *              kDataSize    数组大小。
- * @return      测试结果。
- * @author      xuchanglong
- * @time           2019-08-09
+ * @paras   pdata   待测试的数组。
+ *          kDataSize   数组大小。
+ * @ret 测试结果。
+ * @time    2019-08-09
  */
 template <typename T>
 int TestSingleLinkList(T *pdata, const size_t &kDataSize);

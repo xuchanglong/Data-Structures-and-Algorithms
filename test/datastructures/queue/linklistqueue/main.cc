@@ -1,28 +1,25 @@
 /**
  * @function    queue/linklistqueue/linklistqueue.hpp 的单元测试代码。
- * @author       xuchanglong
- * @time            2019-08-04
+ * @time    2019-08-04
  */
 #include "queue/linklistqueue/linklistqueue.hpp"
 #include <iostream>
 
 /**
  * @function    依次从队列中取出元素，显示到控制台上。
- * @paras         queue   队列
- * @return       none。
- * @author      xuchanglong
- * @time           2019-08-04
+ * @paras   queue   队列
+ * @ret none。
+ * @time    2019-08-04
  */
 template <typename T>
 void ShowQueue(LinkListQueue<T> &queue);
 
 /**
  * @function    针对不同存储类型的队列，进行测试。
- * @paras       pdata       待测试的数组。
- *              kDataSize    数组大小。
- * @return      测试结果。
- * @author      xuchanglong
- * @time           2019-08-04
+ * @paras   pdata待测试的数组。
+ *          kDataSize    数组大小。
+ * @ret 测试结果。
+ * @time    2019-08-04
  */
 template <typename T>
 int TestQueue(T *pdata, const size_t &kDataSize);

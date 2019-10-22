@@ -1,7 +1,6 @@
 /**
  * @function    链式栈的类。
- * @time        2019-07-27
- * @author      xuchanglong
+ * @time    2019-07-27
  */
 
 #ifndef DATA_STRUCTURES_STACK_LINKLISTSTACK_LINKLISTSTACK_HPP_
@@ -40,7 +39,7 @@ public:
     /**
      * @function    创建链式栈。
      * @paras       none
-     * @return      0   创建成功。
+     * @ret      0   创建成功。
      *              -1  栈已经创建。
      *              -2  申请内存失败，可能参数过大。
      */
@@ -69,7 +68,7 @@ public:
     /**
      * @function    销毁栈。
      * @paras       none
-     * @return      none
+     * @ret      none
      */
     int Destroy()
     {
@@ -95,7 +94,7 @@ public:
     /** 
      * @function    将元素地址压入栈中。
      * @paras       data    待压入栈中的元素的地址。
-     * @return      0       操作成功
+     * @ret      0       操作成功
      *              -1      地址为空
      *              -2      申请节点失败。
      */
@@ -124,7 +123,7 @@ public:
     /**
      * @function    将元素弹出栈。
      * @paras       弹出来的元素。
-     * @return      0   操作成功。
+     * @ret      0   操作成功。
      *              -1  栈中元素数量为空。
      */
     int Pop(T &data)
@@ -147,7 +146,7 @@ public:
     /**
      * @function    判断栈是否是空的。
      * @paras       none
-     * @return      true    栈是空的。
+     * @ret      true    栈是空的。
      *              false   栈是非空。
      */
     bool isEmpty() const { return !elementsum_; }
@@ -155,7 +154,7 @@ public:
     /**
      * @function    返回栈大小。
      * @paras       none
-     * @return      堆栈大小。
+     * @ret      堆栈大小。
      */
     size_t Size() const { return elementsum_; }
 

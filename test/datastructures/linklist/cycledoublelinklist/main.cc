@@ -1,7 +1,6 @@
 /**
  * @function    linklist/cycledoublelinklist/cycledoublelinklist.hpp 的单元测试代码。
- * @author       xuchanglong
- * @time            2019-08-12
+ * @time    2019-08-12
  */
 #include "linklist/cycledoublelinklist/cycledoublelinklist.hpp"
 #include <iostream>
@@ -9,21 +8,19 @@
 
 /**
  * @function    依次从链表中取出元素，显示到控制台上。
- * @paras         kCycDLinkList   双向链表。
- * @return       none。
- * @author      xuchanglong
- * @time           2019-08-12
+ * @paras   kCycDLinkList   双向链表。
+ * @ret none。
+ * @time    2019-08-12
  */
 template <typename T>
 void ShowCycleDoubleLinkList(CycleDoubleLinkList<T> &kCycDLinkList);
 
 /**
  * @function    针对不同存储类型的链表，进行测试。
- * @paras       pdata       待测试的数组。
- *              kDataSize    数组大小。
- * @return      测试结果。
- * @author      xuchanglong
- * @time           2019-08-12
+ * @paras   pdata       待测试的数组。
+ *          kDataSize    数组大小。
+ * @ret 测试结果。
+ * @time    2019-08-12
  */
 template <typename T>
 int TestCycleDoubleLinkList(T *pdata, const size_t &kDataSize);

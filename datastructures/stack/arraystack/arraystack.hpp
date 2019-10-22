@@ -1,7 +1,6 @@
 /**
  * @function    顺序栈的类。
- * @time        2019-07-27
- * @author      xuchanglong
+ * @time    2019-07-27
  */
 
 #ifndef DATA_STRUCTURES_STACK_ARRAYSTACK_ARRAYSTACK_HPP_
@@ -33,10 +32,10 @@ public:
 public:
     /**
      * @function    创建顺序栈。
-     * @paras       顺序栈的大小。
-     * @return      0   创建成功。
-     *              -1  参数错误。
-     *              -2  申请内存失败，可能参数过大。
+     * @paras   kSum    顺序栈的大小。
+     * @ret 0   创建成功。
+     *      -1  参数错误。
+     *      -2  申请内存失败，可能参数过大。
      */
     int Create(const size_t &kSum = 10)
     {
@@ -61,9 +60,9 @@ public:
 
     /**
      * @function    销毁栈。
-     * @paras       顺none
-     * @return      0   操作成功。
-     *              -1  栈不存在。
+     * @paras   none
+     * @ret 0   操作成功。
+     *      -1  栈不存在。
      */
     int Destory()
     {
@@ -81,9 +80,9 @@ public:
 
     /** 
      * @function    将元素的地址压入栈中。
-     * @paras       data    待压入栈中的元素的地址。
-     * @return      0       成功
-     *              -1      栈空间已满。
+     * @paras   data    待压入栈中的元素的地址。
+     * @ret 0   成功
+     *      -1  栈空间已满。
      */
     int Push(T *data)
     {
@@ -99,11 +98,11 @@ public:
     }
 
     /**
-     *  @function       将元素的地址压入栈。若栈已满，则重新申请2倍原大小的空间，
-     *                  将之前的栈中内容 copy 至新栈中，再在新栈中重新压数。
-     *  @paras          data    待压入栈中的元素的地址。
-     *  @ return        0       成功。
-     *                  -1      内存申请失败。
+     *  @function   将元素的地址压入栈。若栈已满，则重新申请2倍原大小的空间，
+     *              将之前的栈中内容 copy 至新栈中，再在新栈中重新压数。
+     *  @paras  data    待压入栈中的元素的地址。
+     *  @ret    0   成功。
+     *          -1  内存申请失败。
      */
     int Push_c(T *data)
     {
@@ -136,10 +135,10 @@ public:
 
     /**
      * @function    将元素弹出栈。
-     * @paras       弹出来的元素。
-     * @return      0   操作成功。
-     *              -1  栈中元素数量为空。
-     * @notice      如何通过返回值显示栈为空的情况，后续补充。
+     * @paras   data    弹出来的元素。
+     * @ret 0   操作成功。
+     *      -1  栈中元素数量为空。
+     * @notice  如何通过返回值显示栈为空的情况，后续补充。
      */
     int Pop(T &data)
     {
@@ -155,31 +154,31 @@ public:
 public:
     /**
      * @function    判断栈是否是空的。
-     * @paras       none
-     * @return      true    栈是空的。
-     *              false   栈是非空。
+     * @paras   none
+     * @ret true    栈是空的。
+     *      false   栈是非空。
      */
     bool isEmpty() const { return pos_ == -1; }
 
     /**
      * @function    判断栈是否是满的。
-     * @paras       none
-     * @return      true    栈是满的。
-     *              false   栈是非满。
+     * @paras   none
+     * @ret true    栈是满的。
+     *      false   栈是非满。
      */
     bool isFull() const { return (size_ - 1) == static_cast<size_t>(pos_); }
 
     /**
      * @function    返回栈大小。
-     * @paras       none
-     * @return      堆栈大小。
+     * @paras   none
+     * @ret 堆栈大小。
      */
     size_t Size() const { return size_; }
 
     /**
      * @function    返回栈顶位置。
-     * @paras       none
-     * @return      栈顶位置。
+     * @paras   none
+     * @ret 栈顶位置。
      */
     size_t TopPos() const { return pos_; }
 
@@ -188,6 +187,7 @@ private:
      * 栈空间大小。
      */
     size_t size_;
+    
     /**
      * 栈的存储空间。
      */

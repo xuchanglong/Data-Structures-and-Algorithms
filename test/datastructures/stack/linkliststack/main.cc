@@ -1,24 +1,23 @@
 /**
  * @function    stack/linkliststack/linkliststack.hpp 的单元测试代码。
- * @author       xuchanglong
- * @time            2019-07-27
+ * @time    2019-07-27
 */
 #include "stack/linkliststack/linkliststack.hpp"
 #include <iostream>
 
 /**
  * @function    依次将元素弹出栈，显示到控制台上。
- * @paras       kStack   栈
- * @return      none。
+ * @paras   kStack   栈
+ * @ret none。
  */
 template <typename T>
 void ShowStack(LinkListStack<T> &kStack);
 
 /**
  * @function    针对不同存储类型的栈，进行测试。
- * @paras       pdata       待测试的数组。
- *              kDatasize    数组大小。
- * @return      测试结果。
+ * @paras   pdata   待测试的数组。
+ *          kDatasize   数组大小。
+ * @ret 测试结果。
  */
 template <typename T>
 int TestStack(T *pdata, const size_t &kDatasize);

@@ -1,6 +1,5 @@
 /**
  * @function    常用的排序算法的集合。
- * @author  xuchanglong
  * @time    2019-08-20
 */
 #include <cstddef>
@@ -26,9 +25,8 @@
  * @function    插入排序算法。
  * @paras   pdata   待排序的数据的首地址。
  *          kCount   待排序的数据的数量。
- * @return  0   操作成功。
- *          -1  pdata = nullptr
- * @author  xuchanglong
+ * @ret 0   操作成功。
+ *      -1  pdata = nullptr
  * @time    2019-08-20
  * @notice  数据从小到大排列。
 */
@@ -75,9 +73,8 @@ int InsertSort(T *pdata, const size_t &kCount)
  * @function    选择排序算法。
  * @paras   pdata   待排序的数据的首地址。
  *          kCount   待排序的数据的数量。
- * @return  0   操作成功。
- *          -1  pdata = nullptr
- * @author  xuchanglong
+ * @ret 0   操作成功。
+ *      -1  pdata = nullptr
  * @time    2019-08-20
 */
 template <typename T>
@@ -124,9 +121,8 @@ int SelectSort(T *pdata, const size_t &kCount)
  *          s   待排序的数据的起始位置。
  *          m   待排序的数据的中间位置。
  *          e   待排序的数据的结束位置。
- * @return  0   操作成功。
- *          -1  pdata = nullptr 。
- * @author  xuchanglong
+ * @ret 0   操作成功。
+ *      -1  pdata = nullptr 。
  * @time    2019-08-22
 */
 template <typename T>
@@ -188,10 +184,9 @@ int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
  * @paras   pdata   待排序的数据的首地址。
  *          s   待排序的数据的起始位置。
  *          e   待排序的数据的结束位置。
- * @return  0   操作成功。
- *          -1  pdata = nullptr 。
- *          -2  不符合递归条件。
- * @author  xuchanglong
+ * @ret 0   操作成功。
+ *      -1  pdata = nullptr 。
+ *      -2  不符合递归条件。
  * @time    2019-08-22
 */
 template <typename T>
@@ -219,9 +214,8 @@ int _MergeSort(T *pdata, const size_t &s, const size_t &e)
  * @function    归并排序算法。
  * @paras   pdata   待排序的数据的首地址。
  *          kCount   待排序的数据的数量。
- * @return  0   操作成功。
- *          -1  pdata = nullptr 。
- * @author  xuchanglong
+ * @ret 0   操作成功。
+ *      -1  pdata = nullptr 。
  * @time    2019-08-22
 */
 template <typename T>
@@ -247,8 +241,7 @@ int MergeSort(T *pdata, const size_t &kCount)
  * @praras  pdata   待分区的数组。
  *          s   数组的开始位置。
  *          e   数组的结束位置。
- * @return  中间值所在的位置。
- * @author  xuchanglong
+ * @ret 中间值所在的位置。
  * @time    2019-10-21
 */
 template <typename T>
@@ -279,10 +272,9 @@ int Partition(T *pdata, int s, int e)
  * @paras  pdata   待排序的数组。
  *          s   数组的开始位置。
  *          e   数组的结束位置。
- * @return  -1  数组内容不存在。
- *          1   不符合递归。
- *          0   完成递归。
- * @author  xuchanglong
+ * @ret -1  数组内容不存在。
+ *      1   不符合递归。
+ *      0   完成递归。
  * @time    2019-10-21
 */
 template <typename T>
@@ -306,9 +298,8 @@ int _QuickeSort(T *pdata, int s, int e)
  * @function    快速排序的入口函数。
  * @paras   pdata   待排序的数组。
  *          kCount   数组的大小。
- * @return  -1  数组不存在。
- *          0   完成排序。
- * @author  xuchanglong
+ * @ret -1  数组不存在。
+ *      0   完成排序。
  * @time    2019-10-21
 */
 template <typename T>
@@ -326,9 +317,8 @@ int QuickeSort(T *pdata, const size_t &kCount)
  * @function    桶排序的入口函数。
  * @paras   pdata   待排序的数组。
  *          kCount   数组的大小。
- * @return  -1  数组不存在。
- *          0   完成排序。
- * @author  xuchanglong
+ * @ret -1  数组不存在。
+ *      0   完成排序。
  * @time    2019-10-21
 */
 template <size_t kBucketSize,

@@ -1,7 +1,6 @@
 /**
  * @function    单链表实现类。
- * @author      xuchanglong
- * @time        2018-08-09
+ * @time    2018-08-09
  */
 #ifndef DATA_STRUCTURES_LINKLIST_SINGLELINKLIST_SINGLELINKLIST_HPP_
 #define DATA_STRUCTURES_LINKLIST_SINGLELINKLIST_SINGLELINKLIST_HPP_
@@ -31,10 +30,9 @@ public:
 public:
     /**
      * @function    创建单向链表。
-     * @paras       none 。
-     * @return      none 。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   none 。
+     * @ret none 。
+     * @time    2019-08-09
      */
     void Create()
     {
@@ -54,13 +52,12 @@ public:
 
     /**
      * @function    销毁单向链表。
-     * @paras       none 。
-     * @return      none 。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   none 。
+     * @ret none 。
+     * @time    2019-08-09
      * --------------------------------
-     * @modify      增加判断链表起始位置的功能。
-     * @time        2019-08-15
+     * @modify  增加判断链表起始位置的功能。
+     * @time    2019-08-15
      * @question    暂时不能解决带环的单链的释放问题。
      */
     void Destroy()
@@ -89,16 +86,15 @@ public:
 
     /**
      * @function    在头部位置插入节点。
-     * @paras       pnode   待插入的节点。
-     *                        pdata   待插入的数据。
-     * @return      0   操作成功。
-     *              -1  pdata == nullptr  && pnode == nullptr
-     *              -2  链表已满。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   pnode   待插入的节点。
+     *          pdata   待插入的数据。
+     * @ret 0   操作成功。
+     *      -1  pdata == nullptr  && pnode == nullptr
+     *      -2  链表已满。
+     * @time    2019-08-09
      * -----------------------------------------------
      * @modify  增加形参 pnode 。
-     * @time        2019-08-14
+     * @time    2019-08-14
      */
     int InsertHead(SingleLinkListNode<T> *pnode, T *pdata)
     {
@@ -133,15 +129,14 @@ public:
 
     /**
      * @function    在尾部位置插入节点。
-     * @paras       pdata   待插入的数据。
-     * @return      0   操作成功。
-     *              -1  pdata == nullptr 。
-     *              -2  链表已满。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   pdata   待插入的数据。
+     * @ret 0   操作成功。
+     *      -1  pdata == nullptr 。
+     *      -2  链表已满。
+     * @time    2019-08-09
      * -----------------------------------------------
      * @modify  增加形参 pnode 。
-     * @time        2019-08-14
+     * @time    2019-08-14
      */
     int InsertTail(SingleLinkListNode<T> *pnode, T *pdata)
     {
@@ -176,13 +171,12 @@ public:
 
     /**
      * @function    删除指定的节点。
-     * @paras       pdata   待插入的数据。
-     * @return      0   操作成功。
-     *              -1  pdata == nullptr 。
-     *              -2  链表为空 。
-     *              -3  该节点在链表中不存在。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   pdata   待插入的数据。
+     * @ret 0   操作成功。
+     *      -1  pdata == nullptr 。
+     *      -2  链表为空 。
+     *      -3  该节点在链表中不存在。
+     * @time    2019-08-09
      */
     int RemoveNode(SingleLinkListNode<T> *pnode)
     {
@@ -230,11 +224,10 @@ public:
 
     /**
      * @function    搜索指定的数据。
-     * @paras       pdata   待插入的数据。
-     * @return      非空    操作成功。
-     *                          空      失败。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   pdata   待插入的数据。
+     * @ret 非nullptr   操作成功。
+     *      nullptr 失败。
+     * @time    2019-08-09
      */
     SingleLinkListNode<T> *SearchNode(T *pdata) const
     {
@@ -262,21 +255,20 @@ public:
 
     /**
      * @function    返回头部节点。
-     * @paras       node 。
-     * @return      头部节点。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   node 。
+     * @ret 头部节点。
+     * @time    2019-08-09
      */
     SingleLinkListNode<T> *Head() const
     {
         return head_;
     }
+
     /**
      * @function    返回尾部节点。
-     * @paras       node 。
-     * @return      尾部节点。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   node 。
+     * @ret 尾部节点。
+     * @time    2019-08-09
      */
     SingleLinkListNode<T> *Tail() const
     {
@@ -285,11 +277,10 @@ public:
 
     /**
      * @function    判断链表是否为空。
-     * @paras       node 。
-     * @return      true    空
-     *              false   非空
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   node 。
+     * @ret true    空
+     *      false   非空
+     * @time    2019-08-09
      */
     bool isEmpty() const
     {
@@ -298,10 +289,9 @@ public:
 
     /**
      * @function    返回链表中节点的数量。
-     * @paras       node 。
-     * @return      链表中节点的数量。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   node 。
+     * @ret 链表中节点的数量。
+     * @time    2019-08-09
      */
     size_t Size() const
     {
@@ -310,10 +300,9 @@ public:
 
     /**
      * @function    返回链表中节点数量上限。
-     * @paras       node 。
-     * @return      链表中节点数量上限。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   node 。
+     * @ret 链表中节点数量上限。
+     * @time    2019-08-09
      */
     size_t MaxSize() const
     {
@@ -322,11 +311,10 @@ public:
 
     /**
      * @function    判断链表是否是满的。
-     * @paras       node 。
-     * @return      true    已满。
-     *              false   未满。
-     * @author      xuchanglong
-     * @time        2019-08-09
+     * @paras   node 。
+     * @ret true    已满。
+     *      false   未满。
+     * @time    2019-08-09
      */
     bool isFull() const
     {

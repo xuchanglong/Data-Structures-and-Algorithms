@@ -1,7 +1,6 @@
 /**
  * @function    链式循环队列的类。
- * @author      xuchanglong
- * @time        2019-08-04
+ * @time    2019-08-04
  */
 #ifndef DATA_STRUCTURES_QUEUE_LINKLISTQUEUE_LINKLISTQUEUE_HPP_
 #define DATA_STRUCTURES_QUEUE_LINKLISTQUEUE_LINKLISTQUEUE_HPP_
@@ -39,11 +38,10 @@ public:
 public:
     /**
      * @function    创建队列。
-     * @paras       none 。
-     * @return      报错代码。
-     *              0   操作成功。
-     * @author      xuchanglong
-     * @time        2019-08-04
+     * @paras   none 。
+     * @ret 报错代码。
+     *      0   操作成功。
+     * @time    2019-08-04
      */
     int Create()
     {
@@ -56,11 +54,10 @@ public:
 
     /**
      * @function    销毁队列。
-     * @paras       none 。
-     * @return      报错代码。
-     *              0   操作成功。
-     * @author      xuchanglong
-     * @time        2019-08-04
+     * @paras   none 。
+     * @ret 报错代码。
+     *      0   操作成功。
+     * @time    2019-08-04
      */
     int Destroy()
     {
@@ -81,13 +78,12 @@ public:
 
     /**
      * @function    元素指针入队。
-     * @paras       pdata 元素指针。
-     * @return      报错代码。
-     *              0   操作成功。
-     *              -1  形参为空。
-     *              -2  申请存放该指针的内存时失败。
-     * @author      xuchanglong
-     * @time        2019-08-02
+     * @paras   pdata 元素指针。
+     * @ret 报错代码。
+     *      0   操作成功。
+     *      -1  形参为空。
+     *      -2  申请存放该指针的内存时失败。
+     * @time    2019-08-02
      */
     int EnQueue(T *pdata)
     {
@@ -124,12 +120,11 @@ public:
 
     /**
      * @function    元素出队。
-     * @paras       data 元素。
-     * @return      报错代码。
-     *              0   操作成功。
-     *              -1  队列为空。
-     * @author      xuchanglong
-     * @time        2019-08-02
+     * @paras   data 元素。
+     * @ret 报错代码。
+     *      0   操作成功。
+     *      -1  队列为空。
+     * @time    2019-08-02
      */
     int DeQueue(T &data)
     {
@@ -155,20 +150,18 @@ public:
 private:
     /**
      * @function    返回队列中元素个数。
-     * @paras       none 。
-     * @return      队列中元素个数。
-     * @author      xuchanglong
-     * @time        2019-08-04
+     * @paras   none 。
+     * @ret 队列中元素个数。
+     * @time    2019-08-04
      */
     size_t Size() { return elementsum_; }
 
     /**
      * @function    返回队列是否为空。
-     * @paras       none 。
-     * @return      true    队列为空
-     *                          false   队列非空。
-     * @author      xuchanglong
-     * @time        2019-08-04
+     * @paras   none 。
+     * @ret true    队列为空
+     *      false   队列非空。
+     * @time    2019-08-04
      */
     bool isEmpty() { return !elementsum_; }
 
