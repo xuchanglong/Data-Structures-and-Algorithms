@@ -7,15 +7,16 @@ Data-Structures-and-Algorithms
 |---|---
 |E-mail|xclsoftware@163.com
 
-
 ****
+
 ### 一、目录介绍
 ****
 	
-|./algorithm|算法源码集合|
-|./datastructures|数据结构源码集合
-|./test|对算法和数据结构的测试代码
-
+|algorithm|算法源码集合|
+|---|---
+|datastructures|数据结构源码集合
+|---|---
+|test|对算法和数据结构的测试代码
 
 ****
 ### 二、内容
