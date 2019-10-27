@@ -2,6 +2,11 @@
 #include <memory.h>
 
 /**
+ * 散列表的装载因子。
+*/
+const double g_storagefactor = 0.5;
+
+/**
  * 定义键值类型，即：存储在散列表中的数据的类型。
 */
 typedef int KeyType;
@@ -178,7 +183,7 @@ auto InsertRcd(sHashTable &H, const KeyType &kKey) -> int
          * 找到了状态为空的位置。
          * 冲突次数未达到上线。
          */
-        if ((count * 1.0f / H.size) < 0.5)
+        if ((count * 1.0f / H.size) < g_storagefactor)
         {
             // 插入记录。
             H.pRcd[pos].Key = kKey;
