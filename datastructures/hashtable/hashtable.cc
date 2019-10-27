@@ -1,26 +1,26 @@
 #include <iostream>
 #include <memory.h>
 
-/*
- *	定义键值类型，即：存储在散列表中的数据的类型。
- */
+/**
+ * 定义键值类型，即：存储在散列表中的数据的类型。
+*/
 typedef int KeyType;
 
-/*
- *	声明记录类型。
- */
+/**
+ * 声明记录类型。
+*/
 struct RcdType
 {
     //  关键字，也是散列表中存储的内容。
     KeyType Key;
 };
 
-/*
- *	哈希表对象
- */
+/**
+ * 哈希表对象。
+*/
 struct sHashTable
 {
-    //  记录存储基址。
+    //  记录散列表中记录的存储的首地址。
     RcdType *pRcd;
 
     /**
@@ -44,7 +44,7 @@ struct sHashTable
 int Index = 0;
 
 /**
- * 记录散列表的大小的数组。和 Index 配合使用。
+ * 记录散列表的大小的数组，和 Index 配合使用。
 */
 int HashTableSize[2] = {11, 31};
 
@@ -52,20 +52,12 @@ int HashTableSize[2] = {11, 31};
  * @function    初始化散列表。
  * @paras   H   待初始化的散列表对象。
  *          kSize   散列表的大小。
- * @ret 0   操作成功。
- *      -1  申请内存失败。
+ * @ret none 。
 */
-auto InitHashTable(sHashTable &H, const int &kSize) -> int
+auto InitHashTable(sHashTable &H, const int &kSize) -> void
 {
-    H.pRcd = (RcdType *)malloc(sizeof(KeyType) * kSize);
-    H.pTag = (int *)malloc(sizeof(int) * kSize);
-
-    if (
-        (H.pRcd == nullptr) ||
-        (H.pTag == nullptr))
-    {
-        return -1;
-    }
+    H.pRcd = new RcdType[kSize];
+    H.pTag = new int[kSize]();
 
     memset(H.pRcd, 0, sizeof(RcdType) * kSize);
     memset(H.pTag, 0, sizeof(int) * kSize);
@@ -73,7 +65,7 @@ auto InitHashTable(sHashTable &H, const int &kSize) -> int
     H.count = 0;
     H.size = kSize;
 
-    return 0;
+    return;
 }
 
 /**
@@ -84,9 +76,7 @@ auto InitHashTable(sHashTable &H, const int &kSize) -> int
 */
 auto Hash(const KeyType &Key, const int &size) -> int
 {
-    /*
-	 *	保证 hash 值不会超过 m 。
-	 */
+    //  保证 hash 值不会超过 m 。
     return Key * 3 % size;
 }
 
@@ -97,9 +87,7 @@ auto Hash(const KeyType &Key, const int &size) -> int
 */
 auto Collision(int &pos, const int &size) -> void
 {
-    /*
-	 *	保证 hash 值不会超过散列表的大小 。
-	 */
+    //  保证 hash 值不会超过散列表的大小 。
     pos = (pos + 1) % size;
     return;
 }
@@ -125,7 +113,7 @@ auto PrintHashTable(const sHashTable &H) -> void
     std::cout << std::endl;
 }
 
-auto ReCreateHashTable(sHashTable &H) -> int;
+auto ReCreateHashTable(sHashTable &H) -> void;
 
 /**
  * @function  从散列表中查找指定的记录。
@@ -136,29 +124,41 @@ auto ReCreateHashTable(sHashTable &H) -> int;
  * @ret 0   找到了指定的记录 。
  *      -1  未找到指定的记录，该位置为空。
 */
-auto SearchRcd(const sHashTable &H, const KeyType &Key, int &pos, int &count) -> int
+auto SearchRcd(const sHashTable &kH, const KeyType &kKey, int &pos, int &count) -> int
 {
-    pos = Hash(Key, H.size);
+    pos = Hash(kKey, kH.size);
     count = 0;
+
+    /**
+     * 一共 4 种情况。
+     * （1）kH.pTag[pos] == 2 。
+     * （2）kH.pTag[pos] == 1 && kH.pRcd[pos].Key != kKey 。
+     * （3）kH.pTag[pos] == 1 && kH.pRcd[pos].Key == kKey 。
+     * （4）kH.pTag[pos] == 0
+    */
     //  处理冲突。
     while (
         //  若该位置的关键字已经删除，则继续查找。
-        (H.pTag[pos] == 2) ||
+        (kH.pTag[pos] == 2) ||
         //  该位置有效且该记录和待查找的记录不同，则继续查找。
         (
-            (H.pTag[pos] == 1) &&
-            (H.pRcd[pos].Key != Key)))
+            (kH.pTag[pos] == 1) &&
+            (kH.pRcd[pos].Key != kKey)))
     {
-        Collision(pos, H.size);
+        Collision(pos, kH.size);
         ++count;
     }
 
-    if ((H.pTag[pos] == 1) && (H.pRcd[pos].Key == Key))
+    if ((kH.pTag[pos] == 1) && (kH.pRcd[pos].Key == kKey))
     {
         return 0;
     }
     else
     {
+        /**
+         * 程序运行到这里，代表着 kH.pTag[pos] == 0 。
+         * 代表着找到了状态为空的位置。
+        */
         return -1;
     }
 }
@@ -169,19 +169,19 @@ auto SearchRcd(const sHashTable &H, const KeyType &Key, int &pos, int &count) ->
  *          Key 被插入的记录。
  * @ret 0   插入成功。
 */
-auto InsertRcd(sHashTable &H, const KeyType &Key) -> int
+auto InsertRcd(sHashTable &H, const KeyType &kKey) -> int
 {
     int pos, count;
-    if (-1 == SearchRcd(H, Key, pos, count))
+    if (-1 == SearchRcd(H, kKey, pos, count))
     {
         /**
-         * 寻找没有数据的位置。
+         * 找到了状态为空的位置。
+         * 冲突次数未达到上线。
          */
-        //  冲突次数未达到上线。
         if ((count * 1.0f / H.size) < 0.5)
         {
             // 插入记录。
-            H.pRcd[pos].Key = Key;
+            H.pRcd[pos].Key = kKey;
             H.pTag[pos] = 1;
             ++H.count;
         }
@@ -199,22 +199,18 @@ auto InsertRcd(sHashTable &H, const KeyType &Key) -> int
 }
 
 /**
- * 
-*/
-
-/**
  * @function    删除散列表中的指定记录。
  * @paras   H   散列表的对象。
  *          Key 指定的记录。
  * @ret 0   删除成功。
  *      -1  删除失败。
 */
-auto DeleteRcd(sHashTable &H, const KeyType &Key) -> int
+auto DeleteRcd(sHashTable &H, const KeyType &kKey) -> int
 {
     int pos, count;
-    if (0 == SearchRcd(H, Key, pos, count))
+    if (0 == SearchRcd(H, kKey, pos, count))
     {
-        //  删除代码。
+        //  在散列表中找到了指定的 kKey 。
         H.pTag[pos] = 2;
         --H.count;
     }
@@ -228,38 +224,32 @@ auto DeleteRcd(sHashTable &H, const KeyType &Key) -> int
 /**
  * @function    重构散列表，即：扩大散列表的大小。
  * @paras   被重构的散列表。
- * @ret 0   重构成功。
- *      -1  申请新的散列表失败。
+ * @ret none 。
 */
-auto ReCreateHashTable(sHashTable &H) -> int
+auto ReCreateHashTable(sHashTable &H) -> void
 {
     RcdType *pRcd = H.pRcd;
     int *pTag = H.pTag;
     int size = H.size;
 
-    if (InitHashTable(H, HashTableSize[Index++]) == 0)
+    InitHashTable(H, HashTableSize[Index++]);
+    /**
+     * 将现有的有效的记录重新放入新的 Hash Table 中。
+     * 各个记录与之前的位置不在一样。
+    */
+    for (int i = 0; i < size; ++i)
     {
-        /*
-		 *	将现有的有效的记录重新放入新的 Hash Table 中。
-		 *	各个记录与之前的位置不在一样。
-		 */
-        for (int i = 0; i < size; ++i)
+        if (pTag[i] == 1)
         {
-            if (pTag[i] == 1)
-            {
-                InsertRcd(H, pRcd[i].Key);
-            }
+            InsertRcd(H, pRcd[i].Key);
         }
-        delete pRcd;
-        pRcd = nullptr;
-        delete pTag;
-        pTag = nullptr;
     }
-    else
-    {
-        return -1;
-    }
-    return 0;
+    delete pRcd;
+    pRcd = nullptr;
+    delete pTag;
+    pTag = nullptr;
+
+    return;
 }
 
 int main()
@@ -270,11 +260,7 @@ int main()
 
     std::cout << "-----------  创建 Hash Table  -----------" << std::endl;
     std::cout << "初始化 Hash Table";
-    if (-1 == InitHashTable(H, HashTableSize[Index++]))
-    {
-        std::cout << "Initialization failed" << std::endl;
-        return 1;
-    }
+    InitHashTable(H, HashTableSize[Index++]);
 
     std::cout << std::endl;
     std::cout << "插入 Hash Table " << std::endl;
@@ -285,7 +271,8 @@ int main()
     }
 
     std::cout << std::endl;
-    std::cout << "删除 Hash Table 中记录 " << "12" << std::endl;
+    std::cout << "删除 Hash Table 中记录 "
+              << "12" << std::endl;
     if (-1 == DeleteRcd(H, 12))
     {
         std::cout << "Failed to delete." << std::endl;
