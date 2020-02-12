@@ -37,3 +37,126 @@
  * 4、散列表表设计复杂，需要考虑哈希函数的设计、哈希冲突、扩容和缩容问题。
  * 而平衡二叉树只需要考虑平衡性的问题。
 */
+
+#include <iostream>
+struct TreeNode
+{
+public:
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
+
+public:
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+};
+
+TreeNode *SearchBST(TreeNode *root, int key)
+{
+    while (root != nullptr)
+    {
+        if (key == root->val)
+        {
+            return root;
+        }
+        root = root->val > key ? root->left : root->right;
+    }
+    return nullptr;
+}
+
+void InsertBST(TreeNode *&root, int data)
+{
+    TreeNode *node = new TreeNode(data);
+    if (root == nullptr)
+    {
+        root = node;
+        return;
+    }
+
+    if (SearchBST(root, data) != nullptr)
+        return;
+    TreeNode *preNode = nullptr;
+    TreeNode *curNode = root;
+    while (curNode)
+    {
+        preNode = curNode;
+        curNode = curNode->val > data ? curNode->left : curNode->right;
+    }
+    if (preNode->val > data)
+    {
+        preNode->left = node;
+    }
+    else
+    {
+        preNode->right = node;
+    }
+    return;
+}
+
+void MinOrderVisit(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+    MinOrderVisit(root->left);
+    std::cout << root->val << " ";
+    MinOrderVisit(root->right);
+    return;
+}
+
+void DeleteBST(TreeNode *&root, int data)
+{
+
+    if (root == nullptr)
+        return;
+
+    if (root->val == data)
+    {
+        TreeNode *p = root;
+        if (root->left == nullptr && root->right == nullptr)
+        {
+            root = nullptr;
+        }
+        else if (root->left == nullptr)
+            root = root->right;
+        else if (root->right == nullptr)
+            root = root->left;
+        else
+        {
+            TreeNode *temp = root->right;
+            TreeNode *find = nullptr;
+            while (temp)
+            {
+                find = temp;
+                temp = temp->left;
+            }
+            find->left = root->left;
+            root = root->right;
+        }
+        delete p;
+    }
+    else if (root->val > data)
+    {
+        DeleteBST(root->left, data);
+    }
+    else
+    {
+        DeleteBST(root->right, data);
+    }
+    return;
+}
+
+int main()
+{
+
+    int a[] = {2, 1, 4, 3, 5, 6, 8, 7, 9, 10};
+    int len = sizeof(a) / sizeof(a[0]);
+    TreeNode *p = nullptr;
+    for (int i = 0; i < len; i++)
+    {
+        InsertBST(p, a[i]);
+    }
+    DeleteBST(p, 7);
+    MinOrderVisit(p);
+
+    std::cin.get();
+    return 0;
+}
