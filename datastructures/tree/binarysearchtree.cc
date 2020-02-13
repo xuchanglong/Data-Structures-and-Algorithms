@@ -35,11 +35,11 @@
  * 3、尽管散列表查找操作是常量级的，但是在哈希冲突的存在下，时间复杂度就不确定了，有可能比O(logn)
  * 还有大，再加上哈希函数本身的算法耗时，总的下来时间也不低。
  * 4、散列表表设计复杂，需要考虑哈希函数的设计、哈希冲突、扩容和缩容问题。
- * 而平衡二叉树只需要考虑平衡性的问题。
+ * 而平衡二叉树只需要考虑平衡性的问题。class
 */
 
 #include <iostream>
-struct TreeNode
+class TreeNode
 {
 public:
     TreeNode(int x) : val(x), left(nullptr), right(nullptr){};
@@ -116,9 +116,13 @@ void DeleteBST(TreeNode *&root, int data)
             root = nullptr;
         }
         else if (root->left == nullptr)
+        {
             root = root->right;
+        }
         else if (root->right == nullptr)
+        {
             root = root->left;
+        }
         else
         {
             TreeNode *temp = root->right;
@@ -156,7 +160,5 @@ int main()
     }
     DeleteBST(p, 7);
     MinOrderVisit(p);
-
-    std::cin.get();
     return 0;
 }
