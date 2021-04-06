@@ -34,33 +34,24 @@ template <typename T>
 int InsertSort(T *pdata, const size_t &kCount)
 {
     if (pdata == nullptr)
-    {
         return -1;
-    }
     int k = 0;
     T tmp;
     for (size_t i = 1; i < kCount; i++)
     {
         tmp = pdata[i];
         k = i - 1;
-        /**
-         * 查找插入位置。
-         * 比较时没有等号，故该算法是稳定排序算法。
-        */
+        // 查找插入位置。
+        // 比较时没有等号，故该算法是稳定排序算法。
         while ((k >= 0) && (pdata[k] > tmp))
         {
-            /**
-             * 数据移动。
-            */
+            //数据移动。
             pdata[k + 1] = pdata[k];
             k--;
         }
-        /**
-         * 插入数据。
-        */
+        // 插入数据。
         pdata[k + 1] = tmp;
     }
-
     return 0;
 }
 
@@ -82,29 +73,19 @@ int SelectSort(T *pdata, const size_t &kCount)
 {
     size_t imin = 0;
     if (pdata == nullptr)
-    {
         return -1;
-    }
     for (size_t i = 0; i < kCount - 1; i++)
     {
         imin = i;
-        /**
-         * 从未排序部分中查找最小值。
-        */
+        // 从未排序部分中查找最小值。
         for (size_t k = i + 1; k < kCount; k++)
         {
             if (pdata[k] < pdata[imin])
-            {
                 imin = k;
-            }
         }
-        /**
-         * 将查到的最小值和当前值进行交换。
-        */
+        // 将查到的最小值和当前值进行交换。
         if (i != imin)
-        {
             SWAP(pdata[i], pdata[imin]);
-        }
     }
 
     return 0;
@@ -129,50 +110,31 @@ template <typename T>
 int _Merge(T *pdata, const size_t &s, const size_t &m, const size_t &e)
 {
     if (pdata == nullptr)
-    {
         return -1;
-    }
     T *ptmp = new T[e - s + 1];
     size_t i, t, k;
-
-    /**
-     * 两组数据合并。
-    */
+    // 两组数据合并。
     for (i = s, t = m + 1, k = 0; (i <= m) && (t <= e);)
     {
-        /**
-         * 该等号的位置保证了排序算法的稳定性。
-         * 因为前后两部分合并时，当发现有相同元素时，首先将属于前一部分的元素复制到临时数组中，
-         * 从而保证了排序算法的稳定性。
-        */
+        // 该等号的位置保证了排序算法的稳定性。
+        // 因为前后两部分合并时，当发现有相同元素时，首先将属于前一部分的元素复制到临时数组中，
+        // 从而保证了排序算法的稳定性。
         if (pdata[i] <= pdata[t])
-        {
             ptmp[k++] = pdata[i++];
-        }
         else
-        {
             ptmp[k++] = pdata[t++];
-        }
     }
-
-    /**
-     * 将剩余的数据补充到排序好的数组中。
-    */
+    // 将剩余的数据补充到排序好的数组中。
     if (i == m + 1)
     {
         while (t <= e)
-        {
             ptmp[k++] = pdata[t++];
-        }
     }
     else
     {
         while (i <= m)
-        {
             ptmp[k++] = pdata[i++];
-        }
     }
-
     memcpy(pdata + s, ptmp, sizeof(T) * (e - s + 1));
     delete[] ptmp;
     ptmp = nullptr;
@@ -193,16 +155,10 @@ template <typename T>
 int _MergeSort(T *pdata, const size_t &s, const size_t &e)
 {
     if (pdata == nullptr)
-    {
         return -1;
-    }
     if (s >= e)
-    {
         return -2;
-    }
-    /**
-     * 求解 s 和 e 的中间值。
-    */
+    // 求解 s 和 e 的中间值。
     const size_t m = (s + e) >> 1;
     _MergeSort(pdata, s, m);
     _MergeSort(pdata, m + 1, e);
@@ -222,9 +178,7 @@ template <typename T>
 int MergeSort(T *pdata, const size_t &kCount)
 {
     if (pdata == nullptr)
-    {
         return -1;
-    }
     _MergeSort(pdata, 0, kCount - 1);
     return 0;
 }
@@ -254,16 +208,12 @@ int Partition(T *pdata, int s, int e)
         if (pdata[k] < pdata[e])
         {
             if (i != k)
-            {
                 SWAP(*(pdata + i), *(pdata + k));
-            }
             ++i;
         }
     }
     if (i != e)
-    {
         SWAP(*(pdata + i), *(pdata + e));
-    }
     return i;
 }
 
@@ -281,13 +231,9 @@ template <typename T>
 int _QuickeSort(T *pdata, int s, int e)
 {
     if (pdata == nullptr)
-    {
         return -1;
-    }
     if (s >= e)
-    {
         return 1;
-    }
     int q = Partition(pdata, s, e);
     _QuickeSort(pdata, s, q - 1);
     _QuickeSort(pdata, q + 1, e);
@@ -327,46 +273,28 @@ template <size_t kBucketSize,
 int BucketSort(T *pdata, const size_t &kCount, Compare comp = Compare())
 {
     if (pdata == nullptr)
-    {
         return -1;
-    }
     std::vector<T> vdata(pdata, pdata + kCount);
     auto first = vdata.begin();
     auto last = vdata.end();
     const T min = *std::min_element(first, last);
     const T max = *std::max_element(first, last);
     const T range = max - min + 1;
-
-    /**
-     * 获取桶的数量。
-    */
+    // 获取桶的数量。
     const size_t kBucketCount = range / kBucketSize + 1;
-
-    /**
-     * 建立一个桶的集合。
-    */
+    // 建立一个桶的集合。
     std::vector<std::vector<T>> vbucketset(kBucketCount);
-
-    /**
-     * 为每个桶预留桶大小的 2 倍的空间。
-    */
+    // 为每个桶预留桶大小的 2 倍的空间。
     for (auto bucket : vbucketset)
-    {
         bucket.reserve(2 * kBucketSize);
-    }
-    /**
-     * 将数据均匀分配到桶内。
-    */
+    // 将数据均匀分配到桶内。
     for (auto it = first; it != last; ++it)
     {
         size_t pos = (*it - min) / kBucketSize;
         vbucketset[pos].emplace_back(*it);
     }
-
-    /**
-     * 对每个桶内的数据进行从小到大的排序
-     * 并将结果依次覆盖原始数据中。
-    */
+    // 对每个桶内的数据进行从小到大的排序
+    // 并将结果依次覆盖原始数据中。
     auto dest = first;
     for (auto it : vbucketset)
     {
@@ -374,7 +302,6 @@ int BucketSort(T *pdata, const size_t &kCount, Compare comp = Compare())
         std::copy(it.begin(), it.end(), dest);
         dest += it.size();
     }
-
     memcpy(pdata, &vdata[0], sizeof(T) * vdata.size());
     return 0;
 }
@@ -395,40 +322,22 @@ int BucketSort(T *pdata, const size_t &kCount, Compare comp = Compare())
 template <typename T>
 int CountingSort(T *pdata, const size_t &kCount)
 {
-    /**
-     * 将数组压入 vector 中。
-    */
+    // 将数组压入 vector 中。
     std::vector<T> vdata(pdata, pdata + kCount);
     auto first = vdata.begin();
     auto last = vdata.end();
     size_t count = 0;
     count = std::distance(first, last);
     T max = *std::max_element(first, last);
-
-    /**
-     * 创建桶的集合，共 max + 1 个。
-    */
+    // 创建桶的集合，共 max + 1 个。
     std::vector<size_t> vbucket(max + 1);
-
-    /**
-     * 将数据放入桶中。
-    */
+    // 将数据放入桶中。
     for (auto it = first; it != last; it++)
-    {
         ++vbucket[*it];
-    }
-
-    /**
-     * 计算每个桶加上之前所有桶的数之和。
-    */
+    // 计算每个桶加上之前所有桶的数之和。
     for (auto i = 1; i <= max + 1; i++)
-    {
         vbucket[i] += vbucket[i - 1];
-    }
-
-    /**
-     * 排序！
-    */
+    // 排序！
     std::vector<T> vtmp(count);
     for (auto it = first; it != last; it++)
     {
@@ -437,10 +346,7 @@ int CountingSort(T *pdata, const size_t &kCount)
         vtmp[pos - 1] = t;
         --vbucket[t];
     }
-
-    /**
-     * 将数据返回。
-    */
+    // 将数据返回。
     memcpy(pdata, &vtmp[0], sizeof(T) * count);
     return 0;
 }
